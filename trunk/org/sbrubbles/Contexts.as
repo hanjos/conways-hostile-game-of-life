@@ -1,6 +1,7 @@
 package org.sbrubbles 
 {
 	import flash.display.MovieClip;
+	import org.sbrubbles.context.Context;
 	
 	/**
 	 * ...
@@ -17,20 +18,20 @@ package org.sbrubbles
 		
 		public function update():void
 		{
-			if (current == null)
+			if (_current == null)
 				return;
 				
-			current.update()
+			_current.update()
 		}
 		
 		// properties
 		public function get current():Context { return _current }
-		public function set current(_current:Context) 
+		public function set current(_curr:Context):void 
 		{ 
 			if (this._current != null)
 				this._current.terminate()
 				
-			this._current = _current
+			this._current = _curr
 			
 			if (this._current != null)
 				this._current.start()

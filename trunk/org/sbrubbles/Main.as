@@ -3,7 +3,7 @@ package org.sbrubbles
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import org.sbrubbles.contexts.Context;
+	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Game;
 	
 	/**
@@ -34,7 +34,7 @@ package org.sbrubbles
 			// configure starting values for inputs
 			
 			// set context
-			_contexts.current = new Game()
+			_contexts.current = new Game(this)
 			
 			// draw
 			draw()
@@ -49,10 +49,10 @@ package org.sbrubbles
 		private function update(e:Event):void 
 		{
 			// process global input
-			//Input.onUpdate();
+			//Input.onUpdate()
 			
 			// update level
-            _contexts.update();
+            _contexts.update()
 		}
 		
 		// propriedades
