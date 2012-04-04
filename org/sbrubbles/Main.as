@@ -7,6 +7,7 @@ package org.sbrubbles
 	import org.sbrubbles.context.ColoredContext;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Game;
+	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.systems.Input;
 	
 	/**
@@ -35,7 +36,11 @@ package org.sbrubbles
 			// configure starting values for inputs
 			
 			// set context
-			_contexts.current = new ColoredContext(this, 0xFF0000)
+			_contexts.register("R", new ColoredContext(this, 0xFF0000))
+			_contexts.register("G", new ColoredContext(this, 0x00FF00))
+			_contexts.register("B", new ColoredContext(this, 0x0000FF))
+			
+			_contexts.activate("R")
 			
 			// draw
 			draw()
@@ -55,6 +60,7 @@ package org.sbrubbles
 			// update context
             _contexts.update()
 			
+			// check input
 			checkInput()
 		}
 		
@@ -62,12 +68,12 @@ package org.sbrubbles
 		{
 			/* TODO remove */
 			if (_input.isPressed(Keyboard.R)) {
-				_contexts.current = new ColoredContext(this, 0xFF0000)
+				_contexts.activate("R")
 			} else if (_input.isPressed(Keyboard.G)) {
-				_contexts.current = new ColoredContext(this, 0x00FF00)
+				_contexts.activate("G")
 			} else if (_input.isPressed(Keyboard.B)) {
-				_contexts.current = new ColoredContext(this, 0x0000FF)
-			}
+				_contexts.activate("B")
+			} 
 			/**/
 		}
 		
