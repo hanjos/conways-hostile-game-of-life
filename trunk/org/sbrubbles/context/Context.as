@@ -16,9 +16,9 @@ package org.sbrubbles.context
 			_main = main
 		}
 		
-		public function start():void { }
+		public function start():void { main.addChild(this) }
 		public function update():void { }
-		public function terminate():void { }
+		public function terminate():void { main.removeChild(this) }
 		
 		// propriedades
 		public function get main():Main { return _main }

@@ -12,8 +12,6 @@ package org.sbrubbles.context
 		public function Game(main:Main) 
 		{
 			super(main)
-			
-			
 		}
 		
 	}
