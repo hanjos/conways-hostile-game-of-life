@@ -4,7 +4,8 @@ package org.sbrubbles
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.ui.Keyboard;
-	import org.sbrubbles.context.ColoredContext;
+	import org.sbrubbles.context.levels.ColoredContext;
+	import org.sbrubbles.context.levels.MainMenu;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Game;
 	import org.sbrubbles.systems.Contexts;
@@ -36,7 +37,7 @@ package org.sbrubbles
 			// configure starting values for inputs
 			
 			// set context
-			_contexts.register("R", new ColoredContext(this, 0xFF0000))
+			_contexts.register("R", new MainMenu(this))
 			_contexts.register("G", new ColoredContext(this, 0x00FF00))
 			_contexts.register("B", new ColoredContext(this, 0x0000FF))
 			

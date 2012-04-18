@@ -1,10 +1,12 @@
-﻿package org.sbrubbles.context 
+﻿package org.sbrubbles.context.levels 
 {
 	import flash.display.Shape;
 	import org.sbrubbles.Main;
+	import org.sbrubbles.context.Context;
+	
 	/**
 	 * ...
-	 * @author ...
+	 * @author Humberto Anjos
 	 */
 	public class ColoredContext extends Context
 	{
@@ -26,7 +28,7 @@
 			bg.graphics.drawRect(0, 0, main.stage.stageWidth, main.stage.stageHeight)
 			bg.graphics.endFill()
 			
-			main.stage.addChild(bg)
+			addChild(bg)
 		}
 	}
 
