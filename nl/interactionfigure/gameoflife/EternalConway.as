@@ -1,4 +1,8 @@
-﻿package nl.interactionfigure.gameoflife {
+﻿/*
+Stolen from http://www.interactionfigure.nl/2008/conways-game-of-life-in-flash/, with some modifications.
+I hope the author doesn't mind...
+*/
+package nl.interactionfigure.gameoflife {
 	import flash.display.MovieClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
