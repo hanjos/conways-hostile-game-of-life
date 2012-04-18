@@ -5,6 +5,7 @@ package org.sbrubbles.context.levels
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import flash.text.TextFieldAutoSize;
+	import nl.interactionfigure.gameoflife.EternalConway;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.Main;
 	
@@ -23,6 +24,10 @@ package org.sbrubbles.context.levels
 		public override function start():void 
 		{
 			super.start()
+			
+			var background = new EternalConway(main.stage)
+			
+			addChild(background);
 			
 			var title:TextField = getTitle();
 			title.x = (main.stage.stageWidth - title.width)/2
