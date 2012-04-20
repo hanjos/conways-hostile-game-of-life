@@ -12,7 +12,6 @@
  */
 package org.sbrubbles.systems
 {
-	
 	/**
 	 * Libraries
 	 */

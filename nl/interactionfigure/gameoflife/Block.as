@@ -63,7 +63,7 @@
 				nNextColour = DEAD;	
 			}
 		}
-		public function setBlock():void {
+		public function update():void {
 			canvas.setPixel(pPosition.x, pPosition.y, nNextColour);
 			nCurrentColour = nNextColour;
 		}
@@ -74,7 +74,7 @@
 			nCurrentColour = color;
 			canvas.setPixel(pPosition.x, pPosition.y, nCurrentColour);
 		}
-		public function toggleColour():void {
+		public function toggleColor():void {
 			if(nCurrentColour == DEAD){
 				nCurrentColour = LIVE;
 			}else{

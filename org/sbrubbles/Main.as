@@ -5,9 +5,8 @@ package org.sbrubbles
 	import flash.events.Event;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.levels.ColoredContext;
-	import org.sbrubbles.context.levels.MainMenu;
+	import org.sbrubbles.context.levels.mainmenu.MainMenu;
 	import org.sbrubbles.context.Context;
-	import org.sbrubbles.context.Game;
 	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.systems.Input;
 	
