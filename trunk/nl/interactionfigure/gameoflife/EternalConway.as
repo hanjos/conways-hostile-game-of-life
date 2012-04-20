@@ -1,5 +1,5 @@
 ﻿/*
-Stolen from http://www.interactionfigure.nl/2008/conways-game-of-life-in-flash/, with some modifications.
+Originally stolen from http://www.interactionfigure.nl/2008/conways-game-of-life-in-flash/, with several modifications.
 I hope the author doesn't mind...
 */
 package nl.interactionfigure.gameoflife {
@@ -16,7 +16,7 @@ package nl.interactionfigure.gameoflife {
 		private static  var CANVAS_HEIGHT:Number = 66;
 		private static  var SCALE:Number = 6;
 		private static const LINE_RGB:uint = 0x000000;
-		private static const LINE_ALPHA:Number = 0.2;
+		private static const LINE_ALPHA:Number = 0.1;
 
 		private var canvas:BitmapData;
 		private var nBlocksTotal:Number;
@@ -62,41 +62,101 @@ package nl.interactionfigure.gameoflife {
 				xstep++;
 			}
 			//////
-			this.addEventListener(Event.ENTER_FRAME, updateFrame);
+			//this.addEventListener(Event.ENTER_FRAME, updateFrame);
 			_stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
 			
 			this.addChildAt(lines,1);
 		}
 		
-		private function clearCanvas(e:MouseEvent):void {
+		/**
+		 * Clears the canvas.
+		 */
+		public function clearCanvas():void {
 			for (var i:uint =0; i<nBlocksTotal; i++) {
 				aBlocks[i].setColor(Block.DEAD);
 			}
 		}
 		
-		private function mouseUpped(e:MouseEvent):void {
-			var p:Point = new Point(Math.floor(this.mouseX / SCALE), Math.floor(this.mouseY / SCALE));
-			
-			/*
-			for (var i:uint =0; i<nBlocksTotal; i++) {
-				if ((aBlocks[i].position.x == p.x) && (aBlocks[i].position.y == p.y)) {
-					aBlocks[i].toggleColour();
-				}
-			}
-			*/
-			
-			aBlocks[(p.y - 1) * CANVAS_WIDTH + p.x - 1].toggleColour()
+		/**
+		 * Returns the block at the given coordinates.
+		 */
+		public function getBlockAt(x:Number, y:Number):Block
+		{
+			return aBlocks[(y - 1) * CANVAS_WIDTH + x - 1]
 		}
 		
-		private function updateFrame(e:Event):void {			
-			/*
+		// === patterns ===
+		/**
+		 * Adds a glider to the canvas at the given coordinates. 
+		 * A glider is the pattern below, with . representing an empty cell and x a live one:
+		 * .x.
+		 * ..x
+		 * xxx
+		 * 
+		 * The given coordinates indicate the top left block.
+		 * 
+		 * @param x the x coordinate.
+		 * @param y the y coordinate.
+		 */
+		private function addGliderAt(x:Number, y:Number):void
+		{
+			getBlockAt(x+1, y).setColor(Block.LIVE)
+			getBlockAt(x+2, y+1).setColor(Block.LIVE)
+			getBlockAt(x, y+2).setColor(Block.LIVE) 
+			getBlockAt(x+1, y+2).setColor(Block.LIVE) 
+			getBlockAt(x+2, y+2).setColor(Block.LIVE)
+		}
+		
+		/**
+		 * Adds an acorn to the canvas at the given coordinates.
+		 * An acorn is the pattern below, with . representing an empty cell and x a live one:
+		 * .x.....
+		 * ...x...
+		 * xx..xxx
+		 * 
+		 * The given coordinates indicate the top left block.
+		 * 
+		 * @param x the x coordinate.
+		 * @param y the y coordinate.
+		 */
+		private function addAcornAt(x:Number, y:Number):void
+		{
+			getBlockAt(x, y+2).setColor(Block.LIVE)
+			getBlockAt(x+1, y).setColor(Block.LIVE)
+			getBlockAt(x+1, y+2).setColor(Block.LIVE)
+            getBlockAt(x+3, y+1).setColor(Block.LIVE)
+            getBlockAt(x+4, y+2).setColor(Block.LIVE)
+            getBlockAt(x+5, y+2).setColor(Block.LIVE)
+            getBlockAt(x+6, y+2).setColor(Block.LIVE)
+		}
+		
+		/**
+		 * Updates the canvas to the new generation.
+		 */
+		public function tick():void 
+		{	
+			// first, let all blocks calculate their next state
 			for (var i:uint =0; i<nBlocksTotal; i++) {
 				aBlocks[i].checkRules();
 			}
+			
+			// then update them all
 			for (i =0; i<nBlocksTotal; i++) {
-				aBlocks[i].setBlock();
+				aBlocks[i].update();
 			}
-			*/
+		}
+		
+		// === event handling ===
+		private function mouseUpped(e:MouseEvent):void 
+		{
+			var x: Number = Math.floor(this.mouseX / SCALE)
+			var y: Number = Math.floor(this.mouseY / SCALE)
+			
+			if(Math.random() > 0.5) {
+				addGliderAt(x, y)
+			} else {
+				addAcornAt(x, y)
+			}
 		}
 	}
 }
