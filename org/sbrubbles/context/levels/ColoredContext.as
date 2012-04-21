@@ -25,7 +25,7 @@
 			
 			var bg:Shape = new Shape()
 			bg.graphics.beginFill(_color)
-			bg.graphics.drawRect(0, 0, main.stage.stageWidth, main.stage.stageHeight)
+			bg.graphics.drawRect(0, 0, owner.stage.stageWidth, owner.stage.stageHeight)
 			bg.graphics.endFill()
 			
 			addChild(bg)

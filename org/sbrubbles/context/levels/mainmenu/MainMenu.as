@@ -1,13 +1,11 @@
 package org.sbrubbles.context.levels.mainmenu 
 {
-	import flash.display.MovieClip;
 	import flash.text.TextField;
-	import flash.text.TextFieldType;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
-	import flash.display.BlendMode;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.Main;
 	
@@ -39,13 +37,13 @@ package org.sbrubbles.context.levels.mainmenu
 			addChild(background);
 			
 			var title:TextField = getTitle();
-			title.x = (main.stage.stageWidth - title.width)/2
-			title.y = (main.stage.stageHeight - title.height)/2
+			title.x = (owner.stage.stageWidth - title.width)/2
+			title.y = (owner.stage.stageHeight - title.height)/2
 			
 			addChild(title);
 			
 			var subtitle:TextField = getSubtitle();
-			subtitle.x = (main.stage.stageWidth - subtitle.width) / 2
+			subtitle.x = (owner.stage.stageWidth - subtitle.width) / 2
 			subtitle.y = title.y + title.height + 2
 			
 			addChild(subtitle);
@@ -59,12 +57,12 @@ package org.sbrubbles.context.levels.mainmenu
 			_background.tick()
 			
 			// check input
-			if (main.input.isPressed(Keyboard.C)) { // ??? sometimes main.input works, sometimes it doesn't, no idea why
+			if (owner.input.isPressed(Keyboard.C)) { // ??? sometimes main.input works, sometimes it doesn't, no idea why
 				_background.clear()
 			}
 			
-			if (main.input.isPressed(Keyboard.SPACE)) { // go to the game
-				main.contexts.activate(Main.GAME)
+			if (owner.input.isPressed(Keyboard.SPACE)) { // go to the game
+				owner.contexts.activate(Main.GAME)
 			}
 		}
 		
@@ -72,7 +70,8 @@ package org.sbrubbles.context.levels.mainmenu
 		 * Returns the title, creating it lazily.
 		 * 
 		 * @return the non-null title.
-		 */private function getTitle():TextField
+		 */
+		private function getTitle():TextField
 		{
 			if(_title == null) {
 				_title = new TextField();
@@ -131,7 +130,7 @@ package org.sbrubbles.context.levels.mainmenu
 		private function getBackground():Grid 
 		{
 			if (_background == null)
-				_background = new Grid(main.stage)
+				_background = new Grid(owner.stage)
 				
 			return _background
 		}

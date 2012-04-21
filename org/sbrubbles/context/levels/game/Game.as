@@ -2,97 +2,75 @@ package org.sbrubbles.context.levels.game
 {
 	import flash.geom.Point;
 	import org.sbrubbles.context.Context;
+	import org.sbrubbles.context.levels.game.states.DeadHero;
+	import org.sbrubbles.context.levels.game.states.Playing;
 	import org.sbrubbles.Main;
 	import flash.ui.Keyboard;
+	import org.sbrubbles.systems.Contexts;
+	import org.sbrubbles.systems.Input;
 	
 	/**
-	 * The context holding the game.
+	 * The context holding the game. Holds its own context manager, since the 
+	 * game has its own subcontexts.
 	 * 
 	 * @author Humberto Anjos
 	 */
 	public class Game extends Context
 	{
+		public static const PLAYING = "PLAYING"
+		public static const DEAD_HERO = "DEAD-HERO"
+		
 		private var _grid:Grid
 		private var _hero:Hero
+		private var _contexts:Contexts
 		
 		public function Game(main:Main) 
 		{
 			super(main);
+			
+			_contexts = new Contexts()
+			_contexts.register(PLAYING, new Playing(this))
+			_contexts.register(DEAD_HERO, new DeadHero(this))
+			
+			_contexts.activate(PLAYING)
 		}
 		
 		// === context operations ===
-		public override function start():void
-		{
-			super.start() // can't forget this call!
-			
-			var grid = loadMap(getGrid())
-			var hero = getHero()
-			
-			addChild(grid)
-		}
-		
 		public override function update():void
 		{
-			// update the world
-			_grid.update()
-			
-			// update the hero
-			_hero.update()
-			
-			// check if the hero's still alive
-			if (_hero.health <= 0) {
-				trace("hero is dead!")
-			}
-			
-			// apply input
-			if (main.input.isPressed(Keyboard.W)) { // go up
-				_hero.position.y = Math.max(0, _hero.position.y - 1)
-			}
-			if (main.input.isPressed(Keyboard.A)) { // go left
-				_hero.position.x = Math.max(0, _hero.position.x - 1)
-			}
-			if (main.input.isPressed(Keyboard.S)) { // go down
-				_hero.position.y = Math.min(_grid.gridHeight - 1, _hero.position.y + 1)
-			}
-			if (main.input.isPressed(Keyboard.D)) { // go right
-				_hero.position.x = Math.min(_grid.gridWidth - 1, _hero.position.x + 1)
-			}
+			// update the current context
+			contexts.update()
 		}
 		
-		// === maps ===
-		private function loadMap(grid:Grid):Grid
+		/**
+		 * Resets this object's fields to their original values.
+		 */
+		public function reset()
 		{
-			grid.setBlocksAs(Block.START,
-				new Point(0, 0), new Point(0, 1), new Point(0, 2), new Point(0, 3),
-				new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3),
-				new Point(2, 0), new Point(2, 1), new Point(2, 2), new Point(2, 3),
-				new Point(3, 0), new Point(3, 1), new Point(3, 2), new Point(3, 3))
-				
-			grid.setBlocksAs(Block.END,
-				new Point(grid.gridWidth - 4, grid.gridHeight - 4), new Point(grid.gridWidth - 4, grid.gridHeight - 3), new Point(grid.gridWidth - 4, grid.gridHeight - 2), new Point(grid.gridWidth - 4, grid.gridHeight - 1),
-				new Point(grid.gridWidth - 3, grid.gridHeight - 4), new Point(grid.gridWidth - 3, grid.gridHeight - 3), new Point(grid.gridWidth - 3, grid.gridHeight - 2), new Point(grid.gridWidth - 3, grid.gridHeight - 1),
-				new Point(grid.gridWidth - 2, grid.gridHeight - 4), new Point(grid.gridWidth - 2, grid.gridHeight - 3), new Point(grid.gridWidth - 2, grid.gridHeight - 2), new Point(grid.gridWidth - 2, grid.gridHeight - 1),
-				new Point(grid.gridWidth - 1, grid.gridHeight - 4), new Point(grid.gridWidth - 1, grid.gridHeight - 3), new Point(grid.gridWidth - 1, grid.gridHeight - 2), new Point(grid.gridWidth - 1, grid.gridHeight - 1))
-			
-			return grid
+			_grid = null
+			_hero = null
 		}
 		
-		private function getGrid():Grid 
+		// === properties ===
+		public function get grid():Grid 
 		{ 
 			if (_grid == null) {
-				_grid = new Grid(main.stage)
+				_grid = new Grid(owner.stage)
 			}
 			
 			return _grid 
 		}
 		
-		private function getHero():Hero
+		public function get hero():Hero
 		{
 			if (_hero == null) {
-				_hero = new Hero(new Point(0, 0), getGrid(), 8)
+				_hero = new Hero(new Point(0, 0), grid, 8)
 			}
 			
 			return _hero
 		}
+		
+		public function get contexts():Contexts { return _contexts }
+		public function get input():Input { return owner.input }
 	}
 }

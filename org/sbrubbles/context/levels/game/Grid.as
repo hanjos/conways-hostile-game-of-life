@@ -99,7 +99,6 @@ package org.sbrubbles.context.levels.game {
 		 */
 		public function getBlockAt(x:Number, y:Number):Block
 		{
-			//return aBlocks[(y - 1) * CANVAS_WIDTH + x - 1]
 			if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 				return null
 				
@@ -156,7 +155,7 @@ package org.sbrubbles.context.levels.game {
 				}
 			}
 			
-			//// then update only them
+			//// then update only the changed blocks
 			for (var j:uint = 0; j < changed.length; j++) {
 				changed[j].update()
 			}
