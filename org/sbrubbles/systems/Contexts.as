@@ -7,22 +7,25 @@ package org.sbrubbles.systems
 	import org.sbrubbles.context.Context;
 	
 	/**
-	 * ...
+	 * Manages the game contexts, ensuring only one is active at a time, 
+	 * starting and terminating them properly, and holding all known contexts.
+	 * 
 	 * @author Humberto Anjos
 	 */
 	public class Contexts
 	{
 		private var _contexts:Dictionary // <String, Context>
 		private var _current:Context
-		private var _main:Main
 		
-		public function Contexts(main:Main) 
+		public function Contexts() 
 		{
 			_contexts = new Dictionary()
 			_current = null
-			_main = main
 		}
 		
+		/**
+		 * Updates the current context, or does nothing if no context is active.
+		 */
 		public function update():void
 		{
 			if (_current == null)
