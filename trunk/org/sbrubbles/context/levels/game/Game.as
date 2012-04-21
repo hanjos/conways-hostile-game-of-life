@@ -37,10 +37,9 @@ package org.sbrubbles.context.levels.game
 		private function loadMap(grid:Grid):Grid
 		{
 			grid.setBlocksAs(Block.START,
-				new Point(0, 0),
-				new Point(0, 1),
-				new Point(1, 0),
-				new Point(1, 1))
+				new Point(0, 0), new Point(0, 1), new Point(0, 2),
+				new Point(1, 0), new Point(1, 1), new Point(1, 2),
+				new Point(2, 0), new Point(2, 1), new Point(2, 2))
 			
 			return grid
 		}
