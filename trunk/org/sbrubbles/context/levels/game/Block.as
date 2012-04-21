@@ -23,9 +23,12 @@ package org.sbrubbles.context.levels.game {
 		/** The color (RGB) used for a START block. */
 		public static var START:Number = 0x00FF00;
 		
+		/** The color (RGB) used for a END block. */
+		public static var END:Number = 0x0000FF;
+		
 		// === fields ===
 		private var _position:Point;
-		private var _canvas:BitmapData;
+		private var _map:BitmapData;
 		private var _neighbors:Array; // <Point>
 		private var _currentState:Number;
 		private var _nextState:Number;
@@ -37,9 +40,9 @@ package org.sbrubbles.context.levels.game {
 		 * @param position this block's position.
 		 * @param canvas the canvas where this block is drawn.
 		 */
-		public function Block(position:Point, canvas:BitmapData){
+		public function Block(position:Point, map:BitmapData){
 			_position = position;
-			_canvas = canvas;
+			_map = map;
 			
 			_neighbors = [
 				_position.add(new Point( -1, -1)),
@@ -53,7 +56,7 @@ package org.sbrubbles.context.levels.game {
 			]
 			
 			var temp:Array = new Array();
-			var r:Rectangle = canvas.rect;
+			var r:Rectangle = map.rect;
 			for(var i:uint = 0; i < _neighbors.length; i++) {
 				if(r.containsPoint(_neighbors[i])) {
 					temp.push(_neighbors[i]);
@@ -84,7 +87,7 @@ package org.sbrubbles.context.levels.game {
 			var liveNeighborCount:Number = 0
 			
 			for(var i:uint = 0; i < _neighbors.length; i++) {
-				if(_canvas.getPixel(_neighbors[i].x, _neighbors[i].y) == LIVE) {
+				if(_map.getPixel(_neighbors[i].x, _neighbors[i].y) == LIVE) {
 					liveNeighborCount++
 				}
 			}
@@ -111,8 +114,14 @@ package org.sbrubbles.context.levels.game {
 		 * @see checkRules
 		 */
 		public function update():void {
-			_canvas.setPixel(_position.x, _position.y, _nextState);
+			_map.setPixel(_position.x, _position.y, _nextState);
 			_currentState = _nextState;
+		}
+		
+		public function toString():String
+		{
+			var stateStr:String = (state == Block.LIVE) ? "LIVE" : (state == Block.DEAD) ? "DEAD" : state.toString(16)
+			return stateStr + " @ " + position
 		}
 		
 		// === properties ===
@@ -135,7 +144,7 @@ package org.sbrubbles.context.levels.game {
 		 */
 		public function set state(state:Number):void {
 			_currentState = state;
-			_canvas.setPixel(_position.x, _position.y, _currentState);
+			_map.setPixel(_position.x, _position.y, _currentState);
 		}
 	}
 }
