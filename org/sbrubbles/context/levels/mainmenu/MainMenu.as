@@ -34,7 +34,7 @@ package org.sbrubbles.context.levels.mainmenu
 			super.start()
 			
 			var background = getBackground();
-			background.clearCanvas()
+			background.clear()
 			
 			addChild(background);
 			
@@ -60,7 +60,7 @@ package org.sbrubbles.context.levels.mainmenu
 			
 			// check input
 			if (main.input.isPressed(Keyboard.C)) { // ??? sometimes main.input works, sometimes it doesn't, no idea why
-				_background.clearCanvas()
+				_background.clear()
 			}
 			
 			if (main.input.isPressed(Keyboard.SPACE)) { // go to the game
