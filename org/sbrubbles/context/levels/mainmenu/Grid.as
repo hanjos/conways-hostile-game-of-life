@@ -12,8 +12,8 @@ package org.sbrubbles.context.levels.mainmenu {
 	import flash.events.MouseEvent;
 
 	/**
-	 * Represents the game's world, which is a grid composed of blocks which 
-	 * may hold several states.
+	 * Represents the main menu's background, which is a Conway's Game of Life 
+	 * grid composed of blocks which may be live or dead.
 	 * 
 	 * @author Humberto Anjos
 	 * @see Block
@@ -181,16 +181,89 @@ package org.sbrubbles.context.levels.mainmenu {
 				new Point(x + 6, y + 2))
 		}
 		
+		/**
+		 * Adds an Gosper glider gun to the canvas at the given coordinates.
+		 * An Gsper glider gun is the pattern below, with . representing an 
+		 * empty cell and x a live one:
+		 * ........................x...........
+		 * ......................x.x...........
+		 * ............xx......xx............xx
+		 * ...........x...x....xx............xx
+		 * xx........x.....x...xx..............
+		 * xx........x...x.xx....x.x...........
+		 * ..........x.....x.......x...........
+		 * ...........x...x....................
+		 * ............xx......................
+		 * 
+		 * 
+		 * The given coordinates indicate the top left block.
+		 * 
+		 * @param x the x coordinate.
+		 * @param y the y coordinate.
+		 */
+		private function addGosperGliderGunAt(x:Number, y:Number):void
+		{	
+			// left 2x2 square
+			setBlocksAs(Block.LIVE,
+				new Point(x, y + 4),
+				new Point(x, y + 5),
+				new Point(x + 1, y + 4),
+				new Point(x + 1, y + 5))
+				
+			// left trigger
+			setBlocksAs(Block.LIVE,
+				new Point(x + 10, y + 4),
+				new Point(x + 10, y + 5),
+				new Point(x + 10, y + 6),
+				new Point(x + 11, y + 3),
+				new Point(x + 11, y + 7),
+				new Point(x + 12, y + 2),
+				new Point(x + 12, y + 8),
+				new Point(x + 13, y + 2),
+				new Point(x + 13, y + 8),
+				new Point(x + 14, y + 5),
+				new Point(x + 15, y + 3),
+				new Point(x + 15, y + 7),
+				new Point(x + 16, y + 4),
+				new Point(x + 16, y + 5),
+				new Point(x + 16, y + 6),
+				new Point(x + 17, y + 5))
+				
+			// right trigger
+			setBlocksAs(Block.LIVE,
+				new Point(x + 20, y + 2),
+				new Point(x + 20, y + 3),
+				new Point(x + 20, y + 4),
+				new Point(x + 21, y + 2),
+				new Point(x + 21, y + 3),
+				new Point(x + 21, y + 4),
+				new Point(x + 22, y + 1),
+				new Point(x + 22, y + 5),
+				new Point(x + 24, y),
+				new Point(x + 24, y + 1),
+				new Point(x + 24, y + 5),
+				new Point(x + 24, y + 6))
+			
+			// right 2x2 square
+			setBlocksAs(Block.LIVE,
+				new Point(x + 34, y + 2),
+				new Point(x + 34, y + 3),
+				new Point(x + 35, y + 2),
+				new Point(x + 35, y + 3))
+		}
+		
 		// === event handling ===
 		private function mouseUpped(e:MouseEvent):void 
 		{
 			var x: Number = Math.floor(this.mouseX / SCALE)
 			var y: Number = Math.floor(this.mouseY / SCALE)
 			
-			if(Math.random() > 0.5) {
+			if(Math.random() < 1/3) {
 				addGliderAt(x, y)
-			} else {
+			} else if(Math.random() < 2/3){
 				addAcornAt(x, y)
+			} else {
+				addGosperGliderGunAt(x, y)
 			}
 		}
 	}
