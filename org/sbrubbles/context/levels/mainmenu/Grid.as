@@ -20,8 +20,8 @@ package org.sbrubbles.context.levels.mainmenu {
 	 */
 	public class Grid extends MovieClip {
 		private static  var CANVAS_WIDTH:Number = 100;
-		private static  var CANVAS_HEIGHT:Number = 66;
-		private static  var SCALE:Number = 6;
+		private static  var CANVAS_HEIGHT:Number = 100;
+		private static  var SCALE:Number = 5;
 		private static const LINE_RGB:uint = 0x000000;
 		private static const LINE_ALPHA:Number = 0.1;
 

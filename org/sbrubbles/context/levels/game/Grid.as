@@ -10,6 +10,7 @@ package org.sbrubbles.context.levels.game {
 	import flash.geom.Point;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Rectangle;
 
 	/**
 	 * Represents the game's world, which is a grid composed of blocks which 
@@ -19,13 +20,14 @@ package org.sbrubbles.context.levels.game {
 	 * @see Block
 	 */
 	public class Grid extends MovieClip {
-		private static  var CANVAS_WIDTH:Number = 100;
-		private static  var CANVAS_HEIGHT:Number = 100;
+		private static  var WIDTH:Number = 100;
+		private static  var HEIGHT:Number = 100;
 		private static  var SCALE:Number = 5;
 		private static const LINE_RGB:uint = 0x000000;
 		private static const LINE_ALPHA:Number = 0.1;
 
-		private var canvas:BitmapData;
+		private var _map:BitmapData;
+		private var _canvas:BitmapData;
 		private var nBlocksTotal:Number;
 		private var aBlocks:Array;
 
@@ -37,21 +39,21 @@ package org.sbrubbles.context.levels.game {
 			var lines:MovieClip = new MovieClip();
 			
 			lines.graphics.lineStyle(1, LINE_RGB, LINE_ALPHA);
-			for (var i:uint = 0; i < CANVAS_WIDTH+1; i++) {
+			for (var i:uint = 0; i < WIDTH+1; i++) {
 				lines.graphics.moveTo(i*SCALE, 0);
-				lines.graphics.lineTo(i*SCALE, CANVAS_HEIGHT * SCALE);
+				lines.graphics.lineTo(i*SCALE, HEIGHT * SCALE);
 			}
-			for (i = 0; i < CANVAS_HEIGHT+1; i++) {
+			for (i = 0; i < HEIGHT+1; i++) {
 				lines.graphics.moveTo(0, i*SCALE);
-				lines.graphics.lineTo(CANVAS_WIDTH * SCALE, i*SCALE);
+				lines.graphics.lineTo(WIDTH * SCALE, i*SCALE);
 			}
 			//
-			canvas = new BitmapData(CANVAS_WIDTH, CANVAS_HEIGHT, false, 0xffffff);
-			var bm:Bitmap = new Bitmap(canvas);
+			_map = new BitmapData(WIDTH, HEIGHT, false, 0xffffff);
+			var bm:Bitmap = new Bitmap(_map);
 			bm.scaleX = bm.scaleY = SCALE;
 			this.addChildAt(bm, 0);
 			//
-			nBlocksTotal = CANVAS_WIDTH * CANVAS_HEIGHT;
+			nBlocksTotal = WIDTH * HEIGHT;
 			var xstep:Number = 0;
 			var ystep:Number = 0;
 			aBlocks = new Array();
@@ -59,12 +61,12 @@ package org.sbrubbles.context.levels.game {
 			for (i = 0; i < nBlocksTotal; i++) {
 				var p:Point = new Point(xstep, ystep);
 				///////////////////////////////////
-				var b:Block = new Block(p, canvas);
+				var b:Block = new Block(p, _map);
 				aBlocks.push(b);
 				/////////////////////////////////
 				
 				xstep++;
-				if ((xstep % CANVAS_WIDTH) == 0) {
+				if ((xstep % WIDTH) == 0) {
 					xstep = 0;
 					ystep++;
 				}
@@ -72,7 +74,12 @@ package org.sbrubbles.context.levels.game {
 			//////
 			_stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
 			
-			this.addChildAt(lines,1);
+			this.addChildAt(lines, 1);
+			//
+			_canvas = new BitmapData(WIDTH, HEIGHT, true, 0)
+			var bm2:Bitmap = new Bitmap(_canvas)
+			bm2.scaleX = bm2.scaleY = SCALE
+			this.addChildAt(bm2, 2);
 		}
 		
 		// === canvas operations ===
@@ -86,15 +93,34 @@ package org.sbrubbles.context.levels.game {
 		}
 		
 		/**
-		 * @return the block at the given coordinatesm or null if there is none.
+		 * @param x the x coordinate.
+		 * @param y the y coordinate.
+		 * @return the block at the given coordinates or null if there is none.
 		 */
 		public function getBlockAt(x:Number, y:Number):Block
 		{
 			//return aBlocks[(y - 1) * CANVAS_WIDTH + x - 1]
-			if (x < 0 || x >= CANVAS_WIDTH || y < 0 || y >= CANVAS_HEIGHT)
+			if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 				return null
 				
-			return aBlocks[y * CANVAS_WIDTH + x]
+			return aBlocks[y * WIDTH + x]
+		}
+		
+		/**
+		 * @param positions a series of points indicating the blocks to get.
+		 * @return the blocks at the given coordinates, in the order given. 
+		 */
+		public function getBlocksAt(...positions):Vector.<Block>
+		{
+			var result:Vector.<Block> = new Vector.<Block>()
+			
+			for (var i:int = 0; i < positions.length; i++) {
+				var p:Point = positions[i]
+				
+				result.push(getBlockAt(p.x, p.y))
+			}
+			
+			return result
 		}
 		
 		/**
@@ -114,30 +140,37 @@ package org.sbrubbles.context.levels.game {
 		}
 		
 		/**
-		 * Updates the canvas to the new generation.
+		 * Updates the grid to the new generation, taking into account the 
+		 * hero's presence.
 		 */
-		public function tick():void 
+		public function update():void 
 		{	
-			var changedBlocks:Array = []
+			// first, update the map
+			//// calculate all blocks' next states, and store those who'll 
+			//// change
+			var changed:Vector.<Block> = new Vector.<Block>()
 			
-			// first, let all blocks calculate their next state, and store the
-			// ones who will change
 			for (var i:uint = 0; i < nBlocksTotal; i++) {
 				if (aBlocks[i].checkRules()) {
-					changedBlocks.push(aBlocks[i])
+					changed.push(aBlocks[i])
 				}
 			}
 			
-			// then update just the blocks that changed
-			for (var j:uint = 0; j < changedBlocks.length; j++) {
-				changedBlocks[j].update();
+			//// then update only them
+			for (var j:uint = 0; j < changed.length; j++) {
+				changed[j].update()
 			}
+			
+			// second, clear the canvas; the hero will draw himself here later 
+			// on
+			_canvas.fillRect(_canvas.rect, 0x00000000)
 		}
 		
 		// === patterns ===
 		/**
 		 * Adds a glider to the canvas at the given coordinates. 
-		 * A glider is the pattern below, with . representing an empty cell and x a live one:
+		 * A glider is the pattern below, with . representing an empty cell 
+		 * and x a live one:
 		 * .x.
 		 * ..x
 		 * xxx
@@ -193,5 +226,11 @@ package org.sbrubbles.context.levels.game {
 				addAcornAt(x, y)
 			}
 		}
+		
+		// === properties ===
+		public function get map():BitmapData { return _map }
+		public function get canvas():BitmapData { return _canvas }
+		public function get gridWidth():Number { return WIDTH }
+		public function get gridHeight():Number { return HEIGHT }
 	}
 }
