@@ -20,6 +20,10 @@ package org.sbrubbles.context.levels.game {
 		/** The color (RGB) used for a DEAD block. */
 		public static var DEAD:Number = 0xFFFFFF;
 		
+		/** The color (RGB) used for a START block. */
+		public static var START:Number = 0x00FF00;
+		
+		// === fields ===
 		private var _position:Point;
 		private var _canvas:BitmapData;
 		private var _neighbors:Array; // <Point>
@@ -60,16 +64,18 @@ package org.sbrubbles.context.levels.game {
 			_currentState = DEAD;
 		}
 		
+		// === operations ===
 		/**
 		 * Applies the Game of Life rules to calculate this block's next state,
 		 * but without actually changing it; the new state will be changed only
 		 * when update() is called.
 		 * 
-		 * The Game of Life rules used here are:
+		 * The rules used here are:
 		 * 1. Any live cell with fewer than two live neighbors dies, as if by loneliness.
 		 * 2. Any live cell with more than three live neighbors dies, as if by overcrowding.
 		 * 3. Any live cell with two or three live neighbors lives, unchanged, to the next generation.
 		 * 4. Any dead cell with exactly three live neighbors comes to life.
+		 * 5. Other states are left unchanged.
 		 * 
 		 * @return true if the next state is different from the current state; false otherwise.
 		 * @see update
@@ -83,12 +89,16 @@ package org.sbrubbles.context.levels.game {
 				}
 			}
 			
-			if((liveNeighborCount == 2 || liveNeighborCount == 3) && _currentState == LIVE) { // rule 3
-				_nextState = LIVE
-			} else if(liveNeighborCount == 3 && _currentState == DEAD) { // rule 4
-				_nextState = LIVE
-			} else { // rules 1 and 2
+			if (_currentState == LIVE && liveNeighborCount < 2) { // loneliness
 				_nextState = DEAD
+			} else if (_currentState == LIVE && liveNeighborCount > 3) { // overcrowding
+				_nextState = DEAD
+			} else if (_currentState == LIVE && (liveNeighborCount == 2 || liveNeighborCount == 3)) { // unchanged
+				_nextState = LIVE
+			} else if (_currentState == DEAD && liveNeighborCount == 3) { // rise, my son
+				_nextState = LIVE
+			} else { // preserve the current state
+				_nextState = _currentState
 			}
 			
 			return _currentState != _nextState

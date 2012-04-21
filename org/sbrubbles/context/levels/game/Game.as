@@ -1,7 +1,9 @@
 package org.sbrubbles.context.levels.game 
 {
+	import flash.geom.Point;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.Main;
+	
 	/**
 	 * The context holding the game.
 	 * 
@@ -16,11 +18,12 @@ package org.sbrubbles.context.levels.game
 			super(main);
 		}
 		
+		// === context operations ===
 		public override function start():void
 		{
 			super.start() // can't forget this call!
 			
-			var grid = getGrid()
+			var grid = loadMap(getGrid())
 			
 			addChild(grid)
 		}
@@ -30,13 +33,25 @@ package org.sbrubbles.context.levels.game
 			_grid.tick()
 		}
 		
+		// === maps ===
+		private function loadMap(grid:Grid):Grid
+		{
+			grid.setBlocksAs(Block.START,
+				new Point(0, 0),
+				new Point(0, 1),
+				new Point(1, 0),
+				new Point(1, 1))
+			
+			return grid
+		}
+		
 		private function getGrid():Grid 
 		{ 
 			if (_grid == null) {
 				_grid = new Grid(main.stage)
 			}
+			
 			return _grid 
 		}
 	}
-
 }
