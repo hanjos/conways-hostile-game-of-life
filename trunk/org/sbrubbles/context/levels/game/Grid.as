@@ -45,21 +45,22 @@ package org.sbrubbles.context.levels.game {
 			this.addChildAt(bm, 0);
 			//
 			nBlocksTotal = CANVAS_WIDTH * CANVAS_HEIGHT;
-			var xstep:Number = 1;
-			var ystep:Number = 1;
+			var xstep:Number = 0;
+			var ystep:Number = 0;
 			aBlocks = new Array();
 
-			for (i =0; i<nBlocksTotal; i++) {
-				var p:Point = new Point(xstep,ystep);
+			for (i = 0; i < nBlocksTotal; i++) {
+				var p:Point = new Point(xstep, ystep);
 				///////////////////////////////////
 				var b:Block = new Block(p, canvas);
 				aBlocks.push(b);
 				/////////////////////////////////
+				
+				xstep++;
 				if ((xstep % CANVAS_WIDTH) == 0) {
 					xstep = 0;
 					ystep++;
 				}
-				xstep++;
 			}
 			//////
 			_stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
@@ -78,11 +79,31 @@ package org.sbrubbles.context.levels.game {
 		}
 		
 		/**
-		 * @return the block at the given coordinates.
+		 * @return the block at the given coordinatesm or null if there is none.
 		 */
 		public function getBlockAt(x:Number, y:Number):Block
 		{
-			return aBlocks[(y - 1) * CANVAS_WIDTH + x - 1]
+			//return aBlocks[(y - 1) * CANVAS_WIDTH + x - 1]
+			if (x < 0 || x >= CANVAS_WIDTH || y < 0 || y >= CANVAS_HEIGHT)
+				return null
+				
+			return aBlocks[y * CANVAS_WIDTH + x]
+		}
+		
+		/**
+		 * Sets the state of all the blocks in the given position to the given
+		 * state.
+		 * 
+		 * @param state the new state.
+		 * @param positions a series of Points holding the positions of the blocks.
+		 */
+		public function setBlocksAs(state:Number, ...positions):void
+		{
+			for (var i:uint = 0; i < positions.length; i++) {
+				var block = getBlockAt(positions[i].x, positions[i].y)
+				if (block != null && (block.state == Block.LIVE || block.state == Block.DEAD))
+					block.state = state
+			}
 		}
 		
 		/**
@@ -100,7 +121,7 @@ package org.sbrubbles.context.levels.game {
 				}
 			}
 			
-			// then update all the blocks that changed
+			// then update just the blocks that changed
 			for (var j:uint = 0; j < changedBlocks.length; j++) {
 				changedBlocks[j].update();
 			}
@@ -121,11 +142,12 @@ package org.sbrubbles.context.levels.game {
 		 */
 		private function addGliderAt(x:Number, y:Number):void
 		{
-			getBlockAt(x+1, y).state = Block.LIVE
-			getBlockAt(x+2, y+1).state = Block.LIVE
-			getBlockAt(x, y+2).state = Block.LIVE
-			getBlockAt(x+1, y+2).state = Block.LIVE
-			getBlockAt(x+2, y+2).state = Block.LIVE
+			setBlocksAs(Block.LIVE,
+				new Point(x + 1, y),
+				new Point(x + 2, y + 1),
+				new Point(x, y + 2),
+				new Point(x + 1, y + 2),
+				new Point(x + 2, y + 2))
 		}
 		
 		/**
@@ -142,13 +164,14 @@ package org.sbrubbles.context.levels.game {
 		 */
 		private function addAcornAt(x:Number, y:Number):void
 		{
-			getBlockAt(x, y+2).state = Block.LIVE
-			getBlockAt(x+1, y).state = Block.LIVE
-			getBlockAt(x+1, y+2).state = Block.LIVE
-            getBlockAt(x+3, y+1).state = Block.LIVE
-            getBlockAt(x+4, y+2).state = Block.LIVE
-            getBlockAt(x+5, y+2).state = Block.LIVE
-            getBlockAt(x+6, y+2).state = Block.LIVE
+			setBlocksAs(Block.LIVE,
+				new Point(x, y + 2),
+				new Point(x + 1, y),
+				new Point(x + 1, y + 2),
+				new Point(x + 3, y + 1),
+				new Point(x + 4, y + 2),
+				new Point(x + 5, y + 2),
+				new Point(x + 6, y + 2))
 		}
 		
 		// === event handling ===
