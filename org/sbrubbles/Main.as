@@ -1,13 +1,14 @@
 package org.sbrubbles 
 {
-	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.levels.ColoredContext;
-	import org.sbrubbles.context.levels.game.Game;
+	import org.sbrubbles.context.levels.game.GameState;
+	import org.sbrubbles.context.levels.game.DeadHero;
+	import org.sbrubbles.context.levels.game.ActiveGame;
+	import org.sbrubbles.context.levels.game.Win;
 	import org.sbrubbles.context.levels.mainmenu.MainMenu;
-	import org.sbrubbles.context.Context;
 	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.systems.Input;
 	
@@ -19,7 +20,9 @@ package org.sbrubbles
 	public class Main extends MovieClip
 	{
 		public static const MAIN_MENU:String = "MAIN_MENU"
-		public static const GAME:String = "GAME"
+		public static const ACTIVE_GAME:String = "ACTIVE_GAME"
+		public static const DEAD_HERO:String = "DEAD_HERO"
+		public static const WIN:String = "WIN"
 		
 		private var _contexts:Contexts
 		private var _input:Input
@@ -45,22 +48,18 @@ package org.sbrubbles
 			// TODO
 			
 			// register all game contexts
+			var gameState = new GameState(stage)
+			
 			_contexts.register(MAIN_MENU, new MainMenu(this))
-			_contexts.register(GAME, new Game(this))
+			_contexts.register(ACTIVE_GAME, new ActiveGame(this, gameState))
+			_contexts.register(DEAD_HERO, new DeadHero(this, gameState))
+			_contexts.register(WIN, new Win(this, gameState))
 			
 			_contexts.register("G", new ColoredContext(this, 0x00FF00))
 			_contexts.register("B", new ColoredContext(this, 0x0000FF))
 			
 			// active the main one
 			_contexts.activate(MAIN_MENU)
-			
-			// draw
-			draw()
-		}
-		
-		private function draw():void
-		{
-			
 		}
 		
 		// events

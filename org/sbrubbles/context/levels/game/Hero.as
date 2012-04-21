@@ -33,11 +33,7 @@ package org.sbrubbles.context.levels.game
 			draw()
 			
 			// check grid for "collision"
-			var x:Number = _position.x
-			var y:Number = _position.y
-			
-			var blocksBelow:Vector.<Block> = 
-				_grid.getBlocksAt(new Point(x, y), new Point(x + 1, y), new Point(x, y + 1), new Point(x + 1, y + 1))
+			var blocksBelow:Vector.<Block> = getBlocksBelow()
 			var isLive:Function = function (item:Block, index:int, vector:Vector.<Block>) { return item != null && item.state == Block.LIVE } 
 			
 			if (blocksBelow.some(isLive)) { // hit detected!
@@ -45,7 +41,7 @@ package org.sbrubbles.context.levels.game
 			}
 		}
 		
-		public function draw()
+		private function draw()
 		{
 			var x:Number = _position.x
 			var y:Number = _position.y
@@ -59,6 +55,14 @@ package org.sbrubbles.context.levels.game
 		{
 			_health = Math.min(MAX_HEALTH, Math.max(_health + hp, 0))
 			_alpha = (uint) (0xFF * _health / MAX_HEALTH)
+		}
+		
+		public function getBlocksBelow():Vector.<Block>
+		{
+			var x:Number = _position.x
+			var y:Number = _position.y
+			
+			return _grid.getBlocksAt(new Point(x, y), new Point(x + 1, y), new Point(x, y + 1), new Point(x + 1, y + 1))
 		}
 		
 		public function reset():void
