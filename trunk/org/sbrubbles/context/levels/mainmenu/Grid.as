@@ -2,7 +2,7 @@
 Originally stolen from http://www.interactionfigure.nl/2008/conways-game-of-life-in-flash/, with several modifications.
 I hope the author doesn't mind...
 */
-package nl.interactionfigure.gameoflife {
+package org.sbrubbles.context.levels.mainmenu {
 	import flash.display.MovieClip;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -11,7 +11,7 @@ package nl.interactionfigure.gameoflife {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
-	public class EternalConway extends MovieClip {
+	public class Grid extends MovieClip {
 		private static  var CANVAS_WIDTH:Number = 100;
 		private static  var CANVAS_HEIGHT:Number = 66;
 		private static  var SCALE:Number = 6;
@@ -24,7 +24,7 @@ package nl.interactionfigure.gameoflife {
 
 		private var _stage:Stage
 		
-		public function EternalConway(_stage:Stage) {
+		public function Grid(_stage:Stage) {
 			this._stage = _stage
 			
 			var lines:MovieClip = new MovieClip();
