@@ -4,25 +4,39 @@ package org.sbrubbles.context
 	import org.sbrubbles.Main;
 	
 	/**
-	 * Uma classe abstrata representando um contexto.
+	 * An abstract class representing a game context.
 	 * 
 	 * @author Humberto Anjos
 	 */
 	public class Context extends MovieClip 
 	{
-		private var _main:Main
+		private var _owner:MovieClip
 		
-		public function Context(main:Main) {
-			_main = main
+		public function Context(owner:MovieClip) {
+			_owner = owner
 		}
 		
-		public function start():void { main.addChild(this) }
+		/**
+		 * Loads and readies all necessary resources to get this context ready 
+		 * to run, being called upon activation.
+		 */
+		public function start():void { _owner.addChild(this) }
+		
+		/**
+		 * Called every frame so that this context can update its internal 
+		 * state.
+		 */
 		public function update():void { }
-		public function terminate():void { main.removeChild(this) }
+		
+		/**
+		 * Unloads all of this context's resources and gets it ready for being 
+		 * swapped out.
+		 */
+		public function terminate():void { _owner.removeChild(this) }
 		
 		// propriedades
-		public function get main():Main { return _main }
-		public function set main(_main:Main) { this._main = _main }
+		public function get owner():MovieClip { return _owner }
+		public function set owner(_owner:MovieClip) { this._owner = _owner }
 	}
 
 }

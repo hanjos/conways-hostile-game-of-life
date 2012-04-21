@@ -61,6 +61,11 @@ package org.sbrubbles.context.levels.game
 			_alpha = (uint) (0xFF * _health / MAX_HEALTH)
 		}
 		
+		public function reset():void
+		{
+			_health = MAX_HEALTH
+		}
+		
 		private function addAlphaTo(alpha:uint, rgb:uint):uint
 		{
 			return (alpha * (1 << 24)) | rgb
@@ -69,6 +74,7 @@ package org.sbrubbles.context.levels.game
 		// === properties ===
 		public function get position():Point { return _position }
 		public function get grid():Grid { return _grid }
+		public function get maxHealth():Number { return MAX_HEALTH }
 		public function get health():Number { return _health }
 	}
 
