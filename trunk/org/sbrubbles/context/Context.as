@@ -10,9 +10,9 @@ package org.sbrubbles.context
 	 */
 	public class Context extends MovieClip 
 	{
-		private var _owner:MovieClip
+		private var _owner:Main
 		
-		public function Context(owner:MovieClip) {
+		public function Context(owner:Main) {
 			_owner = owner
 		}
 		
@@ -35,8 +35,8 @@ package org.sbrubbles.context
 		public function terminate():void { _owner.removeChild(this) }
 		
 		// propriedades
-		public function get owner():MovieClip { return _owner }
-		public function set owner(_owner:MovieClip) { this._owner = _owner }
+		public function get owner():Main { return _owner }
+		public function set owner(_owner:Main) { this._owner = _owner }
 	}
 
 }

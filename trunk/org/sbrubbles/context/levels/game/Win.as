@@ -1,4 +1,4 @@
-package org.sbrubbles.context.levels.game.states 
+package org.sbrubbles.context.levels.game 
 {
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
@@ -7,32 +7,30 @@ package org.sbrubbles.context.levels.game.states
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.Main;
-	import org.sbrubbles.context.Context;
-	import org.sbrubbles.context.levels.game.Game;
-	
 	/**
-	 * A Game subcontext loaded when the hero dies.
+	 * Game context shown when the player is successful.
 	 * 
 	 * @author Humberto Anjos
 	 */
-	public class DeadHero extends Context 
+	public class Win extends GameContext
 	{
 		private var _title:TextField
 		
-		public function DeadHero(game:Game) 
+		public function Win(owner:Main, gameState:GameState) 
 		{
-			super(game)
+			super(owner, gameState)
 		}
 		
+		// === context operations === 
 		public override function start():void
 		{
 			super.start() // FAIL without this it doesn't work
 			
-			owner.grid.alpha = 0.5
-			addChild(owner.grid)
+			gameState.grid.alpha = 0.5
+			addChild(gameState.grid)
 			
 			var title = getTitle()
-			title.x = (owner.stage.stageWidth - title.width)/2
+			title.x = (owner.stage.stageWidth - title.width) / 2
 			title.y = (owner.stage.stageHeight - title.height) / 2
 			
 			addChild(getTitle())
@@ -48,11 +46,13 @@ package org.sbrubbles.context.levels.game.states
 		private function checkInput():void 
 		{
 			if (owner.input.isPressed(Keyboard.SPACE)) { // try again
-				owner.contexts.activate(Game.PLAYING)
+				gameState.reset()
+				owner.contexts.activate(Main.ACTIVE_GAME)
 			}
 			
-			if (owner.input.isPressed(Keyboard.BACKSPACE)) { // go back to the main menu
-				owner.owner.contexts.activate(Main.MAIN_MENU)
+			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
+				gameState.reset()
+				owner.contexts.activate(Main.MAIN_MENU)
 			}
 		}
 		
@@ -73,12 +73,12 @@ package org.sbrubbles.context.levels.game.states
 				
 
 				var format = new TextFormat();
-				format.size = 50
+				format.size = 25
 				format.align = TextFormatAlign.CENTER
 				format.bold = true
 
 				_title.defaultTextFormat = format
-				_title.text = "GAME OVER"
+				_title.text = "Congratulations!\nDo you want to try again?"
 			}
 			
 			return _title;

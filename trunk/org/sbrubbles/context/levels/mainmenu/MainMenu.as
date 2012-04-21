@@ -33,6 +33,7 @@ package org.sbrubbles.context.levels.mainmenu
 			
 			var background = getBackground();
 			background.clear()
+			background.alpha = 0.5
 			
 			addChild(background);
 			
@@ -57,12 +58,12 @@ package org.sbrubbles.context.levels.mainmenu
 			_background.tick()
 			
 			// check input
-			if (owner.input.isPressed(Keyboard.C)) { // ??? sometimes main.input works, sometimes it doesn't, no idea why
+			if (owner.input.isPressed(Keyboard.C)) { // ??? sometimes owner.input works, sometimes it doesn't, no idea why
 				_background.clear()
 			}
 			
 			if (owner.input.isPressed(Keyboard.SPACE)) { // go to the game
-				owner.contexts.activate(Main.GAME)
+				owner.contexts.activate(Main.ACTIVE_GAME)
 			}
 		}
 		
@@ -80,7 +81,7 @@ package org.sbrubbles.context.levels.mainmenu
 				_title.type = TextFieldType.DYNAMIC // non-editable
 				_title.selectable = false
 				_title.autoSize = TextFieldAutoSize.LEFT
-				_title.alpha = 0.5
+				_title.alpha = 1
 
 				var format = new TextFormat();
 				format.size = 25
@@ -108,7 +109,7 @@ package org.sbrubbles.context.levels.mainmenu
 				_subtitle.type = TextFieldType.DYNAMIC // non-editable
 				_subtitle.selectable = false
 				_subtitle.autoSize = TextFieldAutoSize.LEFT
-				_subtitle.alpha = 0.5
+				_subtitle.alpha = 1
 
 				var format = new TextFormat();
 				format.size = 18
