@@ -11,6 +11,13 @@ package org.sbrubbles.context.levels.mainmenu {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
+	/**
+	 * Represents the game's world, which is a grid composed of blocks which 
+	 * may hold several states.
+	 * 
+	 * @author Humberto Anjos
+	 * @see Block
+	 */
 	public class Grid extends MovieClip {
 		private static  var CANVAS_WIDTH:Number = 100;
 		private static  var CANVAS_HEIGHT:Number = 66;
@@ -29,60 +36,102 @@ package org.sbrubbles.context.levels.mainmenu {
 			
 			var lines:MovieClip = new MovieClip();
 			
-			lines.graphics.lineStyle(1,LINE_RGB, LINE_ALPHA);
-			for (var i:uint =0; i<CANVAS_WIDTH; i++) {
+			lines.graphics.lineStyle(1, LINE_RGB, LINE_ALPHA);
+			for (var i:uint = 0; i < CANVAS_WIDTH+1; i++) {
 				lines.graphics.moveTo(i*SCALE, 0);
 				lines.graphics.lineTo(i*SCALE, CANVAS_HEIGHT * SCALE);
 			}
-			for (i =0; i<CANVAS_HEIGHT; i++) {
+			for (i = 0; i < CANVAS_HEIGHT+1; i++) {
 				lines.graphics.moveTo(0, i*SCALE);
 				lines.graphics.lineTo(CANVAS_WIDTH * SCALE, i*SCALE);
 			}
 			//
-			canvas = new BitmapData(CANVAS_WIDTH,CANVAS_HEIGHT,false,0xffffff);
+			canvas = new BitmapData(CANVAS_WIDTH, CANVAS_HEIGHT, false, 0xffffff);
 			var bm:Bitmap = new Bitmap(canvas);
 			bm.scaleX = bm.scaleY = SCALE;
 			this.addChildAt(bm, 0);
 			//
 			nBlocksTotal = CANVAS_WIDTH * CANVAS_HEIGHT;
-			var xstep:Number = 1;
-			var ystep:Number = 1;
+			var xstep:Number = 0;
+			var ystep:Number = 0;
 			aBlocks = new Array();
 
-			for (i =0; i<nBlocksTotal; i++) {
-				var p:Point = new Point(xstep,ystep);
+			for (i = 0; i < nBlocksTotal; i++) {
+				var p:Point = new Point(xstep, ystep);
 				///////////////////////////////////
 				var b:Block = new Block(p, canvas);
 				aBlocks.push(b);
 				/////////////////////////////////
+				
+				xstep++;
 				if ((xstep % CANVAS_WIDTH) == 0) {
 					xstep = 0;
 					ystep++;
 				}
-				xstep++;
 			}
 			//////
-			//this.addEventListener(Event.ENTER_FRAME, updateFrame);
 			_stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
 			
 			this.addChildAt(lines,1);
 		}
 		
+		// === canvas operations ===
 		/**
 		 * Clears the canvas.
 		 */
-		public function clearCanvas():void {
-			for (var i:uint =0; i<nBlocksTotal; i++) {
-				aBlocks[i].setColor(Block.DEAD);
+		public function clear():void {
+			for (var i:uint = 0; i < nBlocksTotal; i++) {
+				aBlocks[i].state = Block.DEAD;
 			}
 		}
 		
 		/**
-		 * Returns the block at the given coordinates.
+		 * @return the block at the given coordinatesm or null if there is none.
 		 */
 		public function getBlockAt(x:Number, y:Number):Block
 		{
-			return aBlocks[(y - 1) * CANVAS_WIDTH + x - 1]
+			//return aBlocks[(y - 1) * CANVAS_WIDTH + x - 1]
+			if (x < 0 || x >= CANVAS_WIDTH || y < 0 || y >= CANVAS_HEIGHT)
+				return null
+				
+			return aBlocks[y * CANVAS_WIDTH + x]
+		}
+		
+		/**
+		 * Sets the state of all the blocks in the given position to the given
+		 * state.
+		 * 
+		 * @param state the new state.
+		 * @param positions a series of Points holding the positions of the blocks.
+		 */
+		public function setBlocksAs(state:Number, ...positions):void
+		{
+			for (var i:uint = 0; i < positions.length; i++) {
+				var block = getBlockAt(positions[i].x, positions[i].y)
+				if (block != null && (block.state == Block.LIVE || block.state == Block.DEAD))
+					block.state = state
+			}
+		}
+		
+		/**
+		 * Updates the canvas to the new generation.
+		 */
+		public function tick():void 
+		{	
+			var changedBlocks:Array = []
+			
+			// first, let all blocks calculate their next state, and store the
+			// ones who will change
+			for (var i:uint = 0; i < nBlocksTotal; i++) {
+				if (aBlocks[i].checkRules()) {
+					changedBlocks.push(aBlocks[i])
+				}
+			}
+			
+			// then update just the blocks that changed
+			for (var j:uint = 0; j < changedBlocks.length; j++) {
+				changedBlocks[j].update();
+			}
 		}
 		
 		// === patterns ===
@@ -100,11 +149,12 @@ package org.sbrubbles.context.levels.mainmenu {
 		 */
 		private function addGliderAt(x:Number, y:Number):void
 		{
-			getBlockAt(x+1, y).setColor(Block.LIVE)
-			getBlockAt(x+2, y+1).setColor(Block.LIVE)
-			getBlockAt(x, y+2).setColor(Block.LIVE) 
-			getBlockAt(x+1, y+2).setColor(Block.LIVE) 
-			getBlockAt(x+2, y+2).setColor(Block.LIVE)
+			setBlocksAs(Block.LIVE,
+				new Point(x + 1, y),
+				new Point(x + 2, y + 1),
+				new Point(x, y + 2),
+				new Point(x + 1, y + 2),
+				new Point(x + 2, y + 2))
 		}
 		
 		/**
@@ -121,29 +171,14 @@ package org.sbrubbles.context.levels.mainmenu {
 		 */
 		private function addAcornAt(x:Number, y:Number):void
 		{
-			getBlockAt(x, y+2).setColor(Block.LIVE)
-			getBlockAt(x+1, y).setColor(Block.LIVE)
-			getBlockAt(x+1, y+2).setColor(Block.LIVE)
-            getBlockAt(x+3, y+1).setColor(Block.LIVE)
-            getBlockAt(x+4, y+2).setColor(Block.LIVE)
-            getBlockAt(x+5, y+2).setColor(Block.LIVE)
-            getBlockAt(x+6, y+2).setColor(Block.LIVE)
-		}
-		
-		/**
-		 * Updates the canvas to the new generation.
-		 */
-		public function tick():void 
-		{	
-			// first, let all blocks calculate their next state
-			for (var i:uint =0; i<nBlocksTotal; i++) {
-				aBlocks[i].checkRules();
-			}
-			
-			// then update them all
-			for (i =0; i<nBlocksTotal; i++) {
-				aBlocks[i].update();
-			}
+			setBlocksAs(Block.LIVE,
+				new Point(x, y + 2),
+				new Point(x + 1, y),
+				new Point(x + 1, y + 2),
+				new Point(x + 3, y + 1),
+				new Point(x + 4, y + 2),
+				new Point(x + 5, y + 2),
+				new Point(x + 6, y + 2))
 		}
 		
 		// === event handling ===

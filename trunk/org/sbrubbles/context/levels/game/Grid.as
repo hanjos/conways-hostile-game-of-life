@@ -11,6 +11,13 @@ package org.sbrubbles.context.levels.game {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
+	/**
+	 * Represents the game's world, which is a grid composed of blocks which 
+	 * may hold several states.
+	 * 
+	 * @author Humberto Anjos
+	 * @see Block
+	 */
 	public class Grid extends MovieClip {
 		private static  var CANVAS_WIDTH:Number = 100;
 		private static  var CANVAS_HEIGHT:Number = 66;
