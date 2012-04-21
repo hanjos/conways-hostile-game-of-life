@@ -61,7 +61,7 @@ package org.sbrubbles.context.levels.mainmenu
 			background.tick()
 			
 			// check input
-			if (new Input(main).isPressed(Keyboard.C)) { // using main's input screws up everything, apparently... #FAIL
+			if (main.input.isPressed(Keyboard.C)) { // ??? sometimes main.input works, sometimes it doesn't, no idea why
 				background.clearCanvas()
 			}
 		}

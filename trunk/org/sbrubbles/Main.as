@@ -11,7 +11,7 @@ package org.sbrubbles
 	import org.sbrubbles.systems.Input;
 	
 	/**
-	 * A classe chamada pelo FLA.
+	 * The class published in the FLA, which starts the whole game.
 	 * 
 	 * @author Humberto Anjos
 	 */
@@ -28,7 +28,11 @@ package org.sbrubbles
 			start()
 		}
 		
-		public function start():void
+		/**
+		 * Loads and readies all of the game's systems and contexts, hooking up 
+		 * all needed callbacks and creating and registering the contexts.
+		 */
+		private function start():void
 		{
 			// set update callback
 			stage.addEventListener(Event.ENTER_FRAME, update, false, 0, true)
@@ -46,7 +50,7 @@ package org.sbrubbles
 			draw()
 		}
 		
-		public function draw():void
+		private function draw():void
 		{
 			
 		}
@@ -57,7 +61,7 @@ package org.sbrubbles
 			// process global input
 			_input.update()
 			
-			// update context
+			// update current context
             _contexts.update()
 			
 			// check input
