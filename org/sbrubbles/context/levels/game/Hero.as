@@ -80,6 +80,8 @@ package org.sbrubbles.context.levels.game
 		public function get grid():Grid { return _grid }
 		public function get maxHealth():Number { return MAX_HEALTH }
 		public function get health():Number { return _health }
+		public function get width():Number { return _width }
+		public function get height():Number { return _height }
 	}
 
 }
