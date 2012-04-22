@@ -1,4 +1,4 @@
-package org.sbrubbles.contexts.game 
+package org.sbrubbles.context.game 
 {
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;

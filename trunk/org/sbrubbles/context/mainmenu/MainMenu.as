@@ -1,4 +1,4 @@
-package org.sbrubbles.contexts.mainmenu 
+package org.sbrubbles.context.mainmenu 
 {
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
