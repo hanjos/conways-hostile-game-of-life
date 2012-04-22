@@ -8,6 +8,7 @@ package org.sbrubbles
 	import org.sbrubbles.contexts.game.GameState;
 	import org.sbrubbles.contexts.game.Win;
 	import org.sbrubbles.contexts.mainmenu.MainMenu;
+	import org.sbrubbles.contexts.mapeditor.MapEditor;
 	
 	/**
 	 * The main class in the FLA, used to start the game and provide global 
@@ -22,6 +23,7 @@ package org.sbrubbles
 		public static const ACTIVE_GAME:String = "ACTIVE_GAME"
 		public static const DEAD_HERO:String = "DEAD_HERO"
 		public static const WIN:String = "WIN"
+		public static const MAP_EDITOR:String = "MAP_EDITOR"
 		
 		private var _contexts:Contexts
 		private var _input:Input
@@ -50,6 +52,7 @@ package org.sbrubbles
 			_contexts.register(ACTIVE_GAME, new ActiveGame(this))
 			_contexts.register(DEAD_HERO, new DeadHero(this))
 			_contexts.register(WIN, new Win(this))
+			_contexts.register(MAP_EDITOR, new MapEditor(this))
 			
 			// active the main one
 			_contexts.goTo(MAIN_MENU)
