@@ -37,7 +37,7 @@ package org.sbrubbles.systems
 		/**
 		 * Registers a new context, accessible with the given id.
 		 * 
-		 * @param id the identifier
+		 * @param id the identifier.
 		 * @param context the context. If null, removes the previous mapping.
 		 * @return the context previously mapped to the given id, or null if there were none.
 		 */
@@ -82,7 +82,7 @@ package org.sbrubbles.systems
 		
 		// properties
 		public function get current():Context { return _current }
-		private function setCurrent(_curr:Context) // ActionScript doesn't like public getters and private setters #FAIL
+		private function setCurrent(_curr:Context) // FAIL ActionScript doesn't like public getters and private setters
 		{
 			if (this._current != null) {
 				this._current.terminate()

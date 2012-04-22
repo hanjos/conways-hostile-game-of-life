@@ -62,10 +62,10 @@ package org.sbrubbles.context.levels.game
 				hero.position.x = Math.max(0, hero.position.x - 1)
 			}
 			if (owner.input.isPressed(Keyboard.S)) { // go down
-				hero.position.y = Math.min(grid.gridHeight - 1, hero.position.y + 1)
+				hero.position.y = Math.min(grid.gridHeight - hero.height, hero.position.y + 1)
 			}
 			if (owner.input.isPressed(Keyboard.D)) { // go right
-				hero.position.x = Math.min(grid.gridWidth - 1, hero.position.x + 1)
+				hero.position.x = Math.min(grid.gridWidth - hero.width, hero.position.x + 1)
 			}
 			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
 				gameState.reset()
