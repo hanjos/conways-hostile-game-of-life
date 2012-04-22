@@ -2,15 +2,12 @@ package org.sbrubbles
 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import flash.ui.Keyboard;
-	import org.sbrubbles.context.levels.ColoredContext;
-	import org.sbrubbles.context.levels.game.GameState;
-	import org.sbrubbles.context.levels.game.DeadHero;
-	import org.sbrubbles.context.levels.game.ActiveGame;
-	import org.sbrubbles.context.levels.game.Win;
-	import org.sbrubbles.context.levels.mainmenu.MainMenu;
-	import org.sbrubbles.systems.Contexts;
-	import org.sbrubbles.systems.Input;
+	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.contexts.game.ActiveGame;
+	import org.sbrubbles.contexts.game.DeadHero;
+	import org.sbrubbles.contexts.game.GameState;
+	import org.sbrubbles.contexts.game.Win;
+	import org.sbrubbles.contexts.mainmenu.MainMenu;
 	
 	/**
 	 * The main class in the FLA, used to start the game and provide global 

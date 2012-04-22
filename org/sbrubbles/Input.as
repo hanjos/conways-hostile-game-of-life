@@ -10,7 +10,7 @@
  * @author  Bruno Miguel de Oliveira Tamer <bmotamer@gmail.com>
  * @version 2012.01.01
  */
-package org.sbrubbles.systems
+package org.sbrubbles
 {
 	/**
 	 * Libraries
