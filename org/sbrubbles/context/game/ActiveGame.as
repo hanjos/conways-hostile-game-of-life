@@ -1,4 +1,4 @@
-package org.sbrubbles.contexts.game 
+package org.sbrubbles.context.game 
 {
 	import flash.geom.Point;
 	import org.sbrubbles.context.Context;

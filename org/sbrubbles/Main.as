@@ -3,12 +3,12 @@ package org.sbrubbles
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import org.sbrubbles.context.Contexts;
-	import org.sbrubbles.contexts.game.ActiveGame;
-	import org.sbrubbles.contexts.game.DeadHero;
-	import org.sbrubbles.contexts.game.GameState;
-	import org.sbrubbles.contexts.game.Win;
-	import org.sbrubbles.contexts.mainmenu.MainMenu;
-	import org.sbrubbles.contexts.mapeditor.MapEditor;
+	import org.sbrubbles.context.game.ActiveGame;
+	import org.sbrubbles.context.game.DeadHero;
+	import org.sbrubbles.context.game.GameState;
+	import org.sbrubbles.context.game.Win;
+	import org.sbrubbles.context.mainmenu.MainMenu;
+	import org.sbrubbles.context.mapeditor.MapEditor;
 	
 	/**
 	 * The main class in the FLA, used to start the game and provide global 

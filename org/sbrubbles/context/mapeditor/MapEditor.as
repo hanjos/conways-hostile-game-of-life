@@ -1,4 +1,4 @@
-package org.sbrubbles.contexts.mapeditor 
+package org.sbrubbles.context.mapeditor 
 {
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
