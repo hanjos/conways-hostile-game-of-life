@@ -1,8 +1,7 @@
 package org.sbrubbles.context.game 
 {
-	import flash.geom.Point;
-	import org.sbrubbles.context.Context;
 	import flash.ui.Keyboard;
+	import org.sbrubbles.context.Context;
 	import org.sbrubbles.Main;
 	
 	/**
@@ -27,20 +26,41 @@ package org.sbrubbles.context.game
 		
 		public override function update():void
 		{
-			owner.gameState.grid.update()
+			super.update()
+			
+			var grid:Grid = owner.gameState.grid
+			var hero:Hero = owner.gameState.hero
+			
+			// update the grid
+			grid.update()
 			
 			// update the hero
-			owner.gameState.hero.update()
+			hero.update()
+			
+			// check for collisions
+			var blocksBelow:Vector.<Block> = hero.getBlocksBelow()
+			var isLive:Function = function (item:Block, index:int, vector:Vector.<Block>) { 
+				return item != null && item.state == Block.LIVE 
+			} 
+			
+			if (blocksBelow.some(isLive)) { // hit detected!
+				hero.heal(-1)
+			}
 			
 			// check if the hero's still alive
-			if (owner.gameState.hero.health <= 0) {
+			if (hero.health <= 0) {
 				owner.contexts.goTo(Main.DEAD_HERO)
+				return
 			}
 			
 			// check if the hero has achieved his objective
-			var isEndArea:Function = function (item:Block, index:int, vector:Vector.<Block>) { return item != null && item.state == Block.END } 
-			if (owner.gameState.hero.getBlocksBelow().every(isEndArea)) {
+			var isEndArea:Function = function (item:Block, index:int, vector:Vector.<Block>) { 
+				return item != null && item.state == Block.END 
+			} 
+			
+			if (blocksBelow.some(isEndArea)) { // win!
 				owner.contexts.goTo(Main.WIN)
+				return
 			}
 			
 			// apply input
@@ -49,8 +69,8 @@ package org.sbrubbles.context.game
 		
 		private function checkInput():void 
 		{
-			var grid = owner.gameState.grid
-			var hero = owner.gameState.hero
+			var grid:Grid = owner.gameState.grid
+			var hero:Hero = owner.gameState.hero
 			
 			if (owner.input.isPressed(Keyboard.W)) { // go up
 				hero.position.y = Math.max(0, hero.position.y - 1)
