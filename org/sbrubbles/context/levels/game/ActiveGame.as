@@ -14,36 +14,36 @@ package org.sbrubbles.context.levels.game
 	 * @author Humberto Anjos
 	 * @see Game
 	 */
-	public class ActiveGame extends GameContext
+	public class ActiveGame extends Context
 	{
-		public function ActiveGame(main:Main, gameState:GameState) 
+		public function ActiveGame(main:Main) 
 		{
-			super(main, gameState);
+			super(main);
 		}
 		
 		public override function start():void
 		{
 			super.start() // can't forget this call!
 			
-			addChild(gameState.grid)
+			addChild(owner.gameState.grid)
 		}
 		
 		public override function update():void
 		{
-			gameState.grid.update()
+			owner.gameState.grid.update()
 			
 			// update the hero
-			gameState.hero.update()
+			owner.gameState.hero.update()
 			
 			// check if the hero's still alive
-			if (gameState.hero.health <= 0) {
-				owner.contexts.activate(Main.DEAD_HERO)
+			if (owner.gameState.hero.health <= 0) {
+				owner.contexts.goTo(Main.DEAD_HERO)
 			}
 			
 			// check if the hero has achieved his objective
 			var isEndArea:Function = function (item:Block, index:int, vector:Vector.<Block>) { return item != null && item.state == Block.END } 
-			if (gameState.hero.getBlocksBelow().every(isEndArea)) {
-				owner.contexts.activate(Main.WIN)
+			if (owner.gameState.hero.getBlocksBelow().every(isEndArea)) {
+				owner.contexts.goTo(Main.WIN)
 			}
 			
 			// apply input
@@ -52,8 +52,8 @@ package org.sbrubbles.context.levels.game
 		
 		private function checkInput():void 
 		{
-			var grid = gameState.grid
-			var hero = gameState.hero
+			var grid = owner.gameState.grid
+			var hero = owner.gameState.hero
 			
 			if (owner.input.isPressed(Keyboard.W)) { // go up
 				hero.position.y = Math.max(0, hero.position.y - 1)
@@ -68,8 +68,8 @@ package org.sbrubbles.context.levels.game
 				hero.position.x = Math.min(grid.gridWidth - hero.width, hero.position.x + 1)
 			}
 			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
-				gameState.reset()
-				owner.contexts.activate(Main.MAIN_MENU)
+				owner.gameState.reset()
+				owner.contexts.goTo(Main.MAIN_MENU)
 			}
 		}
 	}

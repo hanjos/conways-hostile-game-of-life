@@ -6,6 +6,7 @@ package org.sbrubbles.context.levels.game
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
+	import org.sbrubbles.context.Context;
 	import org.sbrubbles.Main;
 	
 	/**
@@ -13,21 +14,21 @@ package org.sbrubbles.context.levels.game
 	 * 
 	 * @author Humberto Anjos
 	 */
-	public class DeadHero extends GameContext 
+	public class DeadHero extends Context 
 	{
 		private var _title:TextField
 		
-		public function DeadHero(main:Main, gameState:GameState) 
+		public function DeadHero(main:Main) 
 		{
-			super(main, gameState)
+			super(main)
 		}
 		
 		public override function start():void
 		{
 			super.start() // FAIL without this it doesn't work
 			
-			gameState.grid.alpha = 0.5
-			addChild(gameState.grid)
+			owner.gameState.grid.alpha = 0.5
+			addChild(owner.gameState.grid)
 			
 			var title = getTitle()
 			title.x = (owner.stage.stageWidth - title.width)/2
@@ -46,13 +47,13 @@ package org.sbrubbles.context.levels.game
 		private function checkInput():void 
 		{
 			if (owner.input.isPressed(Keyboard.SPACE)) { // try again
-				gameState.reset()
-				owner.contexts.activate(Main.ACTIVE_GAME)
+				owner.gameState.reset()
+				owner.contexts.goTo(Main.ACTIVE_GAME)
 			}
 			
 			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
-				gameState.reset()
-				owner.contexts.activate(Main.MAIN_MENU)
+				owner.gameState.reset()
+				owner.contexts.goTo(Main.MAIN_MENU)
 			}
 		}
 		
