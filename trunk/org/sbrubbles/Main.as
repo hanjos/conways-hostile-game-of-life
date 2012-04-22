@@ -13,9 +13,11 @@ package org.sbrubbles
 	import org.sbrubbles.systems.Input;
 	
 	/**
-	 * The main class in the FLA, used to start the game.
+	 * The main class in the FLA, used to start the game and provide global 
+	 * systems for the contexts to use. 
 	 * 
 	 * @author Humberto Anjos
+	 * @see Context
 	 */
 	public class Main extends MovieClip
 	{
@@ -62,7 +64,7 @@ package org.sbrubbles
 			_contexts.activate(MAIN_MENU)
 		}
 		
-		// events
+		// === event handling ===
 		private function update(e:Event):void 
 		{
 			// process global input
@@ -88,8 +90,11 @@ package org.sbrubbles
 			/**/
 		}
 		
-		// properties
+		// === properties ===
+		/** @return the context manager. */
 		public function get contexts() { return _contexts }
+		
+		/** @return the input manager. */
 		public function get input() { return _input }
 	}
 
