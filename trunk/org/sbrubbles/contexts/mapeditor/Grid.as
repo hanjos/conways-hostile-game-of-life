@@ -2,7 +2,7 @@
 Originally stolen from http://www.interactionfigure.nl/2008/conways-game-of-life-in-flash/, with several modifications.
 I hope the author doesn't mind...
 */
-package org.sbrubbles.contexts.game {
+package org.sbrubbles.contexts.mapeditor {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
@@ -10,6 +10,7 @@ package org.sbrubbles.contexts.game {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
+	import flash.utils.Dictionary;
 
 	/**
 	 * Represents the game's world, which is a grid composed of blocks which 
@@ -31,6 +32,9 @@ package org.sbrubbles.contexts.game {
 		private var aBlocks:Array;
 
 		private var _stage:Stage
+		
+		private var _selectedPattern:String
+		private var patterns:Dictionary // <String, (Number, Number) -> void>
 		
 		public function Grid(_stage:Stage) {
 			this._stage = _stage
@@ -72,6 +76,7 @@ package org.sbrubbles.contexts.game {
 			}
 			//////
 			_stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
+			_stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved);
 			
 			this.addChildAt(lines, 1);
 			//
@@ -79,6 +84,14 @@ package org.sbrubbles.contexts.game {
 			var bm2:Bitmap = new Bitmap(_canvas)
 			bm2.scaleX = bm2.scaleY = SCALE
 			this.addChildAt(bm2, 2);
+			
+			_selectedPattern = null
+			patterns = new Dictionary()
+			patterns.glider = addGliderAt
+			patterns.acorn = addAcornAt
+			patterns.gosperGliderGun = addGosperGliderGunAt
+			patterns.start = addStartAt
+			patterns.end = addEndingAt
 		}
 		
 		// === canvas operations ===
@@ -212,17 +225,120 @@ package org.sbrubbles.contexts.game {
 				new Point(x + 6, y + 2))
 		}
 		
+		/**
+		 * Adds an Gosper glider gun to the canvas at the given coordinates.
+		 * An Gsper glider gun is the pattern below, with . representing an 
+		 * empty cell and x a live one:
+		 * ........................x...........
+		 * ......................x.x...........
+		 * ............xx......xx............xx
+		 * ...........x...x....xx............xx
+		 * xx........x.....x...xx..............
+		 * xx........x...x.xx....x.x...........
+		 * ..........x.....x.......x...........
+		 * ...........x...x....................
+		 * ............xx......................
+		 * 
+		 * 
+		 * The given coordinates indicate the top left block.
+		 * 
+		 * @param x the x coordinate.
+		 * @param y the y coordinate.
+		 */
+		private function addGosperGliderGunAt(x:Number, y:Number):void
+		{	
+			// left 2x2 square
+			setBlocksAs(Block.LIVE,
+				new Point(x, y + 4),
+				new Point(x, y + 5),
+				new Point(x + 1, y + 4),
+				new Point(x + 1, y + 5))
+				
+			// left trigger
+			setBlocksAs(Block.LIVE,
+				new Point(x + 10, y + 4),
+				new Point(x + 10, y + 5),
+				new Point(x + 10, y + 6),
+				new Point(x + 11, y + 3),
+				new Point(x + 11, y + 7),
+				new Point(x + 12, y + 2),
+				new Point(x + 12, y + 8),
+				new Point(x + 13, y + 2),
+				new Point(x + 13, y + 8),
+				new Point(x + 14, y + 5),
+				new Point(x + 15, y + 3),
+				new Point(x + 15, y + 7),
+				new Point(x + 16, y + 4),
+				new Point(x + 16, y + 5),
+				new Point(x + 16, y + 6),
+				new Point(x + 17, y + 5))
+				
+			// right trigger
+			setBlocksAs(Block.LIVE,
+				new Point(x + 20, y + 2),
+				new Point(x + 20, y + 3),
+				new Point(x + 20, y + 4),
+				new Point(x + 21, y + 2),
+				new Point(x + 21, y + 3),
+				new Point(x + 21, y + 4),
+				new Point(x + 22, y + 1),
+				new Point(x + 22, y + 5),
+				new Point(x + 24, y),
+				new Point(x + 24, y + 1),
+				new Point(x + 24, y + 5),
+				new Point(x + 24, y + 6))
+			
+			// right 2x2 square
+			setBlocksAs(Block.LIVE,
+				new Point(x + 34, y + 2),
+				new Point(x + 34, y + 3),
+				new Point(x + 35, y + 2),
+				new Point(x + 35, y + 3))
+		}
+		
+		/**
+		 * Sets the block at the given coordinates as a start.
+		 * 
+		 * @param x the x coordinate.
+		 * @param y the y coordinate.
+		 */
+		public function addStartAt(x:Number, y:Number):void
+		{
+			setBlocksAs(Block.START, new Point(x, y))
+		}
+		
+		/**
+		 * Sets the block at the given coordinates as an ending.
+		 * 
+		 * @param x the x coordinate.
+		 * @param y the y coordinate.
+		 */
+		public function addEndingAt(x:Number, y:Number):void
+		{
+			setBlocksAs(Block.END, new Point(x, y))
+		}
+		
 		// === event handling ===
 		private function mouseUpped(e:MouseEvent):void 
 		{
 			var x: Number = Math.floor(this.mouseX / SCALE)
 			var y: Number = Math.floor(this.mouseY / SCALE)
 			
-			if(Math.random() > 0.5) {
-				addGliderAt(x, y)
-			} else {
-				addAcornAt(x, y)
+			if (_selectedPattern == null) { // toggle the block
+				getBlockAt(x, y).toggleState()
+				return
 			}
+			
+			if (_selectedPattern in patterns) {
+				patterns[_selectedPattern](x, y)
+				return
+			}
+		}
+		
+		private function mouseMoved(e:MouseEvent):void
+		{
+			var x: Number = Math.floor(this.mouseX / SCALE)
+			var y: Number = Math.floor(this.mouseY / SCALE)
 		}
 		
 		// === properties ===
@@ -230,5 +346,7 @@ package org.sbrubbles.contexts.game {
 		public function get canvas():BitmapData { return _canvas }
 		public function get gridWidth():Number { return WIDTH }
 		public function get gridHeight():Number { return HEIGHT }
+		public function get selectedPattern():String { return _selectedPattern }
+		public function set selectedPattern(selectedPattern:String):void { _selectedPattern = selectedPattern }
 	}
 }

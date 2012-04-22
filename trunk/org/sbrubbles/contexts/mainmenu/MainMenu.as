@@ -66,6 +66,11 @@ package org.sbrubbles.contexts.mainmenu
 				owner.gameState.reset()
 				owner.contexts.goTo(Main.ACTIVE_GAME)
 			}
+			
+			if (owner.input.isPressed(Keyboard.E)) { // go to the map editor
+				owner.gameState.reset()
+				owner.contexts.goTo(Main.MAP_EDITOR)
+			}
 		}
 		
 		/**
