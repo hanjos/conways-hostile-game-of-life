@@ -63,7 +63,8 @@ package org.sbrubbles.context.levels.mainmenu
 			}
 			
 			if (owner.input.isPressed(Keyboard.SPACE)) { // go to the game
-				owner.contexts.activate(Main.ACTIVE_GAME)
+				owner.gameState.reset()
+				owner.contexts.goTo(Main.ACTIVE_GAME)
 			}
 		}
 		

@@ -28,11 +28,13 @@ package org.sbrubbles
 		
 		private var _contexts:Contexts
 		private var _input:Input
+		private var _gameState:GameState
 		
 		public function Main() 
 		{
 			_input = new Input(this)
 			_contexts = new Contexts()
+			_gameState = new GameState(stage)
 			
 			start()
 		}
@@ -46,22 +48,14 @@ package org.sbrubbles
 			// set the main update callback for all systems
 			stage.addEventListener(Event.ENTER_FRAME, update, false, 0, true)
 			
-			// configure starting values for inputs
-			// TODO
-			
 			// register all game contexts
-			var gameState = new GameState(stage)
-			
 			_contexts.register(MAIN_MENU, new MainMenu(this))
-			_contexts.register(ACTIVE_GAME, new ActiveGame(this, gameState))
-			_contexts.register(DEAD_HERO, new DeadHero(this, gameState))
-			_contexts.register(WIN, new Win(this, gameState))
-			
-			_contexts.register("G", new ColoredContext(this, 0x00FF00))
-			_contexts.register("B", new ColoredContext(this, 0x0000FF))
+			_contexts.register(ACTIVE_GAME, new ActiveGame(this))
+			_contexts.register(DEAD_HERO, new DeadHero(this))
+			_contexts.register(WIN, new Win(this))
 			
 			// active the main one
-			_contexts.activate(MAIN_MENU)
+			_contexts.goTo(MAIN_MENU)
 		}
 		
 		// === event handling ===
@@ -72,22 +66,6 @@ package org.sbrubbles
 			
 			// update current context
             _contexts.update()
-			
-			// check input
-			checkInput()
-		}
-		
-		private function checkInput()
-		{
-			/* TODO remove */
-			if (_input.isPressed(Keyboard.R)) {
-				_contexts.activate(MAIN_MENU)
-			} else if (_input.isPressed(Keyboard.G)) {
-				_contexts.activate("G")
-			} else if (_input.isPressed(Keyboard.B)) {
-				_contexts.activate("B")
-			} 
-			/**/
 		}
 		
 		// === properties ===
@@ -96,6 +74,9 @@ package org.sbrubbles
 		
 		/** @return the input manager. */
 		public function get input() { return _input }
+		
+		/** @return the shared game state. */
+		public function get gameState() { return _gameState }
 	}
 
 }

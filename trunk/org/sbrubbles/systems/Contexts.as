@@ -66,7 +66,7 @@ package org.sbrubbles.systems
 		 * 
 		 * @param id the context to load.
 		 */
-		public function activate(id:String):void
+		public function goTo(id:String):void
 		{
 			// TODO error handling
 			setCurrent(_contexts[id])
@@ -81,9 +81,13 @@ package org.sbrubbles.systems
 		}
 		
 		// properties
+		
+		/**
+		 * @return the current active context, or null if no context is active.
+		 */
 		public function get current():Context { return _current }
-		private function setCurrent(_curr:Context) // FAIL ActionScript doesn't like public getters and private setters
-		{
+		private function setCurrent(_curr:Context) 
+		{ 	// FAIL ActionScript doesn't like public getters and private setters
 			if (this._current != null) {
 				this._current.terminate()
 			}
