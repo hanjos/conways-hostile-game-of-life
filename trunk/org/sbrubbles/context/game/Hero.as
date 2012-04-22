@@ -29,16 +29,8 @@ package org.sbrubbles.context.game
 		// === operations ===
 		public function update()
 		{
-			// draw on the grid
+			// draws itself on the grid
 			draw()
-			
-			// check grid for "collision"
-			var blocksBelow:Vector.<Block> = getBlocksBelow()
-			var isLive:Function = function (item:Block, index:int, vector:Vector.<Block>) { return item != null && item.state == Block.LIVE } 
-			
-			if (blocksBelow.some(isLive)) { // hit detected!
-				heal(-1)
-			}
 		}
 		
 		private function draw()
@@ -51,6 +43,13 @@ package org.sbrubbles.context.game
 			_grid.canvas.setPixel32(x, y + 1, argb); _grid.canvas.setPixel32(x + 1, y + 1, argb)
 		}
 		
+		/**
+		 * Heals the hero by the given amount, up to its maximum health. Or, 
+		 * if the given amount is negative, decreases the hero's health down to
+		 * 0.
+		 * 
+		 * @param hp the amount of health points healed.
+		 */
 		public function heal(hp:Number):void
 		{
 			_health = Math.min(MAX_HEALTH, Math.max(_health + hp, 0))

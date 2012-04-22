@@ -54,7 +54,7 @@ package org.sbrubbles
 			_contexts.register(WIN, new Win(this))
 			_contexts.register(MAP_EDITOR, new MapEditor(this))
 			
-			// active the main one
+			// go to the main menu
 			_contexts.goTo(MAIN_MENU)
 		}
 		
@@ -70,13 +70,13 @@ package org.sbrubbles
 		
 		// === properties ===
 		/** @return the context manager. */
-		public function get contexts() { return _contexts }
+		public function get contexts():Contexts { return _contexts }
 		
 		/** @return the input manager. */
-		public function get input() { return _input }
+		public function get input():Input { return _input }
 		
 		/** @return the shared game state. */
-		public function get gameState() { return _gameState }
+		public function get gameState():GameState { return _gameState }
 	}
 
 }

@@ -25,8 +25,8 @@ package org.sbrubbles.context.game {
 		private static const LINE_RGB:uint = 0x000000;
 		private static const LINE_ALPHA:Number = 0.1;
 
-		private var _map:BitmapData;
-		private var _canvas:BitmapData;
+		private var _map:BitmapData; // where the blocks go; it's the bottom layer
+		private var _canvas:BitmapData; // where the hero is drawn; mostly transparent
 		private var nBlocksTotal:Number;
 		private var aBlocks:Array;
 
@@ -226,8 +226,12 @@ package org.sbrubbles.context.game {
 		}
 		
 		// === properties ===
+		/** @return the bottom layer, where the blocks and Game of Life logic applies. */
 		public function get map():BitmapData { return _map }
+		
+		/** @return the layer on top of the blocks, where the hero is drawn. */
 		public function get canvas():BitmapData { return _canvas }
+		
 		public function get gridWidth():Number { return WIDTH }
 		public function get gridHeight():Number { return HEIGHT }
 	}
