@@ -3,6 +3,8 @@ package org.sbrubbles.context.game
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.gameoflife.Block;
+	import org.sbrubbles.gameoflife.Grid;
 	import org.sbrubbles.Main;
 	import org.sbrubbles.Input;
 	
