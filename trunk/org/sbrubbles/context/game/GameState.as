@@ -29,15 +29,6 @@ package org.sbrubbles.context.game
 		
 		private function loadMap(grid:Grid):Grid
 		{
-			grid.alpha = 1
-			
-			// the starting position
-			grid.setBlocksAs(Block.START,
-				new Point(0, 0), new Point(0, 1), new Point(0, 2), new Point(0, 3),
-				new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3),
-				new Point(2, 0), new Point(2, 1), new Point(2, 2), new Point(2, 3),
-				new Point(3, 0), new Point(3, 1), new Point(3, 2), new Point(3, 3))
-			
 			// the end position
 			grid.setBlocksAs(Block.END,
 				new Point(grid.gridWidth - 4, grid.gridHeight - 4), new Point(grid.gridWidth - 4, grid.gridHeight - 3), new Point(grid.gridWidth - 4, grid.gridHeight - 2), new Point(grid.gridWidth - 4, grid.gridHeight - 1),
