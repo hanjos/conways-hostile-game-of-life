@@ -4,6 +4,7 @@ package org.sbrubbles.context.game
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
+	import org.sbrubbles.Input;
 	
 	/**
 	 * A game context representing the running game.
@@ -73,19 +74,19 @@ package org.sbrubbles.context.game
 			var grid:Grid = owner.gameState.grid
 			var hero:Hero = owner.gameState.hero
 			
-			if (owner.input.isPressed(Keyboard.W)) { // go up
+			if (Input.isPressed(Keyboard.W)) { // go up
 				hero.position.y = Math.max(0, hero.position.y - 1)
 			}
-			if (owner.input.isPressed(Keyboard.A)) { // go left
+			if (Input.isPressed(Keyboard.A)) { // go left
 				hero.position.x = Math.max(0, hero.position.x - 1)
 			}
-			if (owner.input.isPressed(Keyboard.S)) { // go down
+			if (Input.isPressed(Keyboard.S)) { // go down
 				hero.position.y = Math.min(grid.gridHeight - hero.height, hero.position.y + 1)
 			}
-			if (owner.input.isPressed(Keyboard.D)) { // go right
+			if (Input.isPressed(Keyboard.D)) { // go right
 				hero.position.x = Math.min(grid.gridWidth - hero.width, hero.position.x + 1)
 			}
-			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
+			if (Input.isPressed(Keyboard.Q)) { // go back to the main menu
 				owner.gameState.reset()
 				Contexts.goTo(Main.MAIN_MENU)
 			}

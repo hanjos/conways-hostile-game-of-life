@@ -9,6 +9,8 @@ package org.sbrubbles.context.game
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
+	import org.sbrubbles.Input;
+	
 	/**
 	 * Game context shown when the player is successful.
 	 * 
@@ -47,12 +49,12 @@ package org.sbrubbles.context.game
 		
 		private function checkInput():void 
 		{
-			if (owner.input.isPressed(Keyboard.SPACE)) { // try again
+			if (Input.isPressed(Keyboard.SPACE)) { // try again
 				owner.gameState.reset()
 				Contexts.goTo(Main.GAME)
 			}
 			
-			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
+			if (Input.isPressed(Keyboard.Q)) { // go back to the main menu
 				owner.gameState.reset()
 				Contexts.goTo(Main.MAIN_MENU)
 			}

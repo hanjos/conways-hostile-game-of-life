@@ -10,6 +10,7 @@ package org.sbrubbles.context.mainmenu
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
+	import org.sbrubbles.Input;
 	
 	/**
 	 * The starting menu. Informs what other contexts are available, and as a special treat holds a 
@@ -53,16 +54,16 @@ package org.sbrubbles.context.mainmenu
 			_background.tick()
 			
 			// check input
-			if (owner.input.isPressed(Keyboard.C)) { // ??? sometimes owner.input works, sometimes it doesn't, no idea why
+			if (Input.isPressed(Keyboard.C)) { // clear the background
 				_background.clear()
 			}
 			
-			if (owner.input.isPressed(Keyboard.SPACE)) { // go to the game
+			if (Input.isPressed(Keyboard.SPACE)) { // go to the game
 				owner.gameState.reset()
 				Contexts.goTo(Main.GAME)
 			}
 			
-			if (owner.input.isPressed(Keyboard.E)) { // go to the map editor
+			if (Input.isPressed(Keyboard.E)) { // go to the map editor
 				owner.gameState.reset()
 				Contexts.goTo(Main.MAP_EDITOR)
 			}

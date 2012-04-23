@@ -17,10 +17,10 @@ package org.sbrubbles.context
 		private static var _contexts:Dictionary // <String, Context>
 		private static var _current:Context
 		
-		public function Contexts() 
-		{
-			
-		}
+		/**
+		 * Constructor. Does nothing, and shouldn't be called.
+		 */
+		public function Contexts() { }
 		
 		/**
 		 * Static constructor.
