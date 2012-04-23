@@ -115,6 +115,15 @@ package org.sbrubbles.gameoflife {
 			_currentState = _nextState;
 		}
 		
+		public function toggleState():void
+		{
+			if (state == LIVE) {
+				state = DEAD
+			} else if (state == DEAD) {
+				state = LIVE
+			}
+		}
+		
 		// === properties ===
 		/**
 		 * @return this block's position in the grid.

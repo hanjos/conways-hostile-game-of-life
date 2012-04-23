@@ -6,10 +6,8 @@ package org.sbrubbles.gameoflife {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
-	import flash.display.Stage;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import flash.ui.Keyboard;
 
 	/**
 	 * Represents the game's world, which is a grid composed of blocks which 
@@ -67,8 +65,6 @@ package org.sbrubbles.gameoflife {
 				}
 			}
 			//////
-			addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
-			
 			this.addChildAt(lines, 1);
 			//
 			_canvas = new BitmapData(WIDTH, HEIGHT, true, 0)
@@ -160,67 +156,6 @@ package org.sbrubbles.gameoflife {
 			_canvas.fillRect(_canvas.rect, 0x00000000)
 		}
 		
-		// === patterns ===
-		/**
-		 * Adds a glider to the canvas at the given coordinates. 
-		 * A glider is the pattern below, with . representing an empty cell 
-		 * and x a live one:
-		 * .x.
-		 * ..x
-		 * xxx
-		 * 
-		 * The given coordinates indicate the top left block.
-		 * 
-		 * @param x the x coordinate.
-		 * @param y the y coordinate.
-		 */
-		private function addGliderAt(x:Number, y:Number):void
-		{
-			setBlocksAs(Block.LIVE,
-				new Point(x + 1, y),
-				new Point(x + 2, y + 1),
-				new Point(x, y + 2),
-				new Point(x + 1, y + 2),
-				new Point(x + 2, y + 2))
-		}
-		
-		/**
-		 * Adds an acorn to the canvas at the given coordinates.
-		 * An acorn is the pattern below, with . representing an empty cell and x a live one:
-		 * .x.....
-		 * ...x...
-		 * xx..xxx
-		 * 
-		 * The given coordinates indicate the top left block.
-		 * 
-		 * @param x the x coordinate.
-		 * @param y the y coordinate.
-		 */
-		private function addAcornAt(x:Number, y:Number):void
-		{
-			setBlocksAs(Block.LIVE,
-				new Point(x, y + 2),
-				new Point(x + 1, y),
-				new Point(x + 1, y + 2),
-				new Point(x + 3, y + 1),
-				new Point(x + 4, y + 2),
-				new Point(x + 5, y + 2),
-				new Point(x + 6, y + 2))
-		}
-		
-		// === event handling ===
-		private function mouseUpped(e:MouseEvent):void 
-		{
-			var x: Number = Math.floor(this.mouseX / SCALE)
-			var y: Number = Math.floor(this.mouseY / SCALE)
-			
-			if(Math.random() > 0.5) {
-				addGliderAt(x, y)
-			} else {
-				addAcornAt(x, y)
-			}
-		}
-		
 		// === properties ===
 		/** @return the bottom layer, where the blocks and Game of Life logic applies. */
 		public function get map():BitmapData { return _map }
@@ -230,5 +165,6 @@ package org.sbrubbles.gameoflife {
 		
 		public function get gridWidth():Number { return WIDTH }
 		public function get gridHeight():Number { return HEIGHT }
+		public function get gridScale():Number { return SCALE }
 	}
 }
