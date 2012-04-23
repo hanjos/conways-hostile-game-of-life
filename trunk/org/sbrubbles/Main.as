@@ -7,6 +7,7 @@ package org.sbrubbles
 	import org.sbrubbles.context.game.DeadHero;
 	import org.sbrubbles.context.game.GameState;
 	import org.sbrubbles.context.game.Win;
+	import org.sbrubbles.context.instructions.Instructions;
 	import org.sbrubbles.context.mainmenu.MainMenu;
 	import org.sbrubbles.context.mapeditor.MapEditor;
 	
@@ -20,6 +21,7 @@ package org.sbrubbles
 	public class Main extends MovieClip
 	{
 		public static const MAIN_MENU:String = "MAIN_MENU"
+		public static const INSTRUCTIONS:String = "INSTRUCTIONS"
 		public static const GAME:String = "ACTIVE_GAME"
 		public static const DEAD_HERO:String = "DEAD_HERO"
 		public static const WIN:String = "WIN"
@@ -48,6 +50,7 @@ package org.sbrubbles
 			
 			// register all game contexts
 			Contexts.register(MAIN_MENU, new MainMenu(this))
+			Contexts.register(INSTRUCTIONS, new Instructions(this))
 			Contexts.register(GAME, new ActiveGame(this))
 			Contexts.register(DEAD_HERO, new DeadHero(this))
 			Contexts.register(WIN, new Win(this))
