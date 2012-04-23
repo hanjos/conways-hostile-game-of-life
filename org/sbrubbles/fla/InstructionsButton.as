@@ -7,20 +7,21 @@ package org.sbrubbles.fla
 	import org.sbrubbles.context.Contexts;
 	
 	/**
-	 * Leads the player to a new game. Its visuals are defined in the FLA.
+	 * Leads the player to the instructions context. Its visuals are defined 
+	 * in the FLA.
 	 * 
 	 * @author Humberto Anjos
 	 */
-	public class PlayButton extends MovieClip 
+	public class InstructionsButton extends MovieClip
 	{
-		public function PlayButton() 
+		public function InstructionsButton() 
 		{
 			addEventListener(MouseEvent.CLICK, mouseClicked, false, 0, true)
 		}
 		
 		private function mouseClicked(e:MouseEvent)
 		{
-			Contexts.goTo(Main.GAME)
+			Contexts.goTo(Main.INSTRUCTIONS)
 		}
 	}
 
