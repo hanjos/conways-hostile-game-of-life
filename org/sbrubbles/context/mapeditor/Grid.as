@@ -90,7 +90,6 @@ package org.sbrubbles.context.mapeditor {
 			patterns.glider = addGliderAt
 			patterns.acorn = addAcornAt
 			patterns.gosperGliderGun = addGosperGliderGunAt
-			patterns.start = addStartAt
 			patterns.end = addEndingAt
 		}
 		
@@ -294,17 +293,6 @@ package org.sbrubbles.context.mapeditor {
 				new Point(x + 34, y + 3),
 				new Point(x + 35, y + 2),
 				new Point(x + 35, y + 3))
-		}
-		
-		/**
-		 * Sets the block at the given coordinates as a start.
-		 * 
-		 * @param x the x coordinate.
-		 * @param y the y coordinate.
-		 */
-		public function addStartAt(x:Number, y:Number):void
-		{
-			setBlocksAs(Block.START, new Point(x, y))
 		}
 		
 		/**

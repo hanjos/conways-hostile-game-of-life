@@ -20,9 +20,6 @@ package org.sbrubbles.context.game {
 		/** The color (RGB) used for a DEAD block. */
 		public static var DEAD:Number = 0xFFFFFF;
 		
-		/** The color (RGB) used for a START block. */
-		public static var START:Number = 0x00FF00;
-		
 		/** The color (RGB) used for a END block. */
 		public static var END:Number = 0x0000FF;
 		
@@ -116,12 +113,6 @@ package org.sbrubbles.context.game {
 		public function update():void {
 			_map.setPixel(_position.x, _position.y, _nextState);
 			_currentState = _nextState;
-		}
-		
-		public function toString():String
-		{
-			var stateStr:String = (state == Block.LIVE) ? "LIVE" : (state == Block.DEAD) ? "DEAD" : state.toString(16)
-			return stateStr + " @ " + position
 		}
 		
 		// === properties ===

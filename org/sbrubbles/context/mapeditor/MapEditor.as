@@ -50,8 +50,6 @@ package org.sbrubbles.context.mapeditor
 				_grid.selectedPattern = "acorn"
 			} else if (Input.isPressed(Keyboard.O)) { // Gosper's glider gun
 				_grid.selectedPattern = "gosperGliderGun"
-			} else if (Input.isPressed(Keyboard.S)) { // starting pad
-				_grid.selectedPattern = "start"
 			} else if (Input.isPressed(Keyboard.E)) { // ending
 				_grid.selectedPattern = "end"
 			} else if (Input.isPressed(Keyboard.U)) { // unselect a pattern

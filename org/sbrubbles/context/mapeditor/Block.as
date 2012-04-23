@@ -20,9 +20,6 @@ package org.sbrubbles.context.mapeditor {
 		/** The color (RGB) used for a DEAD block. */
 		public static var DEAD:Number = 0xFFFFFF;
 		
-		/** The color (RGB) used for a START block. */
-		public static var START:Number = 0x00FF00;
-		
 		/** The color (RGB) used for a END block. */
 		public static var END:Number = 0x0000FF;
 		
