@@ -25,6 +25,9 @@ package org.sbrubbles.context.game
 		 */
 		public function reset()
 		{
+			if (_grid != null)
+				_grid.clear()
+				
 			_grid = loadMap(new Grid())
 			_hero = new Hero(new Point(0, 0), grid, 8)
 		}
