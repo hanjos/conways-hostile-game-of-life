@@ -48,30 +48,32 @@ package org.sbrubbles.context.mainmenu
 		
 		public override function update():void
 		{
-			super.update() // FAIL you HAVE to call the super, or Flash gets lost (?)
+			super.update() // FAIL do you HAVE to always call the super?
 			
 			// update the background
 			_background.tick()
 			
 			// check input
+			checkInput();
+		}
+		
+		public override function terminate():void
+		{
+			// reset the game state before leaving
+			owner.gameState.reset()
+			
+			super.terminate()
+		}
+		
+		private function checkInput():void 
+		{
 			if (Input.isPressed(Keyboard.C)) { // clear the background
 				_background.clear()
-			}
-			
-			if (Input.isPressed(Keyboard.SPACE)) { // go to the game
-				Contexts.goTo(Main.GAME)
 			}
 			
 			if (Input.isPressed(Keyboard.E)) { // go to the map editor
 				Contexts.goTo(Main.MAP_EDITOR)
 			}
-		}
-		
-		public override function terminate():void
-		{
-			owner.gameState.reset()
-			
-			super.terminate()
 		}
 		
 		/**

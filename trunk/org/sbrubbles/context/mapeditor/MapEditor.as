@@ -1,5 +1,6 @@
 package org.sbrubbles.context.mapeditor 
 {
+	import adobe.utils.ProductManager;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
@@ -8,6 +9,7 @@ package org.sbrubbles.context.mapeditor
 	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
+	import org.sbrubbles.gameoflife.Pattern;
 	import org.sbrubbles.Input;
 	import org.sbrubbles.Main;
 	
@@ -229,9 +231,10 @@ package org.sbrubbles.context.mapeditor
 		 * @param x the x coordinate.
 		 * @param y the y coordinate.
 		 */
-		public function addEndingAt(grid:Grid, x:Number, y:Number):void
+		private function addEndingAt(grid:Grid, x:Number, y:Number):void
 		{
-			grid.setBlocksAs(Block.END, new Point(x, y))
+			//grid.setBlocksAs(Block.END, new Point(x, y))
+			new Pattern(Block.END, new Point(0, 0)).applyOn(grid, x, y)
 		}
 	}
 }
