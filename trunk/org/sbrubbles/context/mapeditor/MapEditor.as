@@ -4,6 +4,7 @@ package org.sbrubbles.context.mapeditor
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
+	import org.sbrubbles.Input;
 	
 	/**
 	 * Provides a context for map creation.
@@ -43,24 +44,24 @@ package org.sbrubbles.context.mapeditor
 		
 		private function checkInput()
 		{
-			if (owner.input.isPressed(Keyboard.G)) { // glider
+			if (Input.isPressed(Keyboard.G)) { // glider
 				_grid.selectedPattern = "glider"
-			} else if (owner.input.isPressed(Keyboard.A)) { // acorn
+			} else if (Input.isPressed(Keyboard.A)) { // acorn
 				_grid.selectedPattern = "acorn"
-			} else if (owner.input.isPressed(Keyboard.O)) { // Gosper's glider gun
+			} else if (Input.isPressed(Keyboard.O)) { // Gosper's glider gun
 				_grid.selectedPattern = "gosperGliderGun"
-			} else if (owner.input.isPressed(Keyboard.S)) { // starting pad
+			} else if (Input.isPressed(Keyboard.S)) { // starting pad
 				_grid.selectedPattern = "start"
-			} else if (owner.input.isPressed(Keyboard.E)) { // ending
+			} else if (Input.isPressed(Keyboard.E)) { // ending
 				_grid.selectedPattern = "end"
-			} else if (owner.input.isPressed(Keyboard.U)) { // unselect a pattern
+			} else if (Input.isPressed(Keyboard.U)) { // unselect a pattern
 				_grid.selectedPattern = null
-			} else if (owner.input.isPressed(Keyboard.C)) { // clear the grid and stop running
+			} else if (Input.isPressed(Keyboard.C)) { // clear the grid and stop running
 				_grid.clear()
 				_running = false
-			} else if (owner.input.isPressed(Keyboard.SPACE)) { // start/stop the running
+			} else if (Input.isPressed(Keyboard.SPACE)) { // start/stop the running
 				_running = !_running
-			} else if (owner.input.isPressed(Keyboard.Q)) { // return to the main menu
+			} else if (Input.isPressed(Keyboard.Q)) { // return to the main menu
 				Contexts.goTo(Main.MAIN_MENU)
 			}
 		}

@@ -15,37 +15,42 @@ package org.sbrubbles
 	/**
 	 * Libraries
 	 */
+	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
-	import org.sbrubbles.Main;
 	
 	public final class Input
 	{
-		
 		/**
 		 * Key states
 		 */
-		public const RELEASED      : uint = 0; // <! Key is released
-		public const TRIGGERED     : uint = 1; // <! Key was pressed right now
-		public const PRESSED       : uint = 2; // <! Key is being pressed
-		public const REPEATED 	  : uint = 3; // <! Key is in the repeat cycle
-		public const JUST_RELEASED : uint = 4; // <! Key was released right now
+		public static const RELEASED      : uint = 0; // <! Key is released
+		public static const TRIGGERED     : uint = 1; // <! Key was pressed right now
+		public static const PRESSED       : uint = 2; // <! Key is being pressed
+		public static const REPEATED 	  : uint = 3; // <! Key is in the repeat cycle
+		public static const JUST_RELEASED : uint = 4; // <! Key was released right now
 		
-		private const keyboardState : Vector.<uint> = new Vector.<uint>(256, true); // <! Keyboard state
+		private static const keyboardState : Vector.<uint> = new Vector.<uint>(256, true); // <! Keyboard state
 		
 		/**
-		 * Constructor.
-		 * 
-		 * @param Main only used to register callbacks for the key events.
+		 * Constructor. Does nothing, and shouldn't be called.
 		 */
-		public function Input(main:Main) {
-			main.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-			main.stage.addEventListener(KeyboardEvent.KEY_UP,   onKeyUp);
+		public function Input() { }
+		
+		/**
+		 * Adds Input's callbacks for key capturing.
+		 * 
+		 * @param stage the stage.
+		 */
+		public static function init(stage:Stage) 
+		{
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			stage.addEventListener(KeyboardEvent.KEY_UP,   onKeyUp);
 		}
 		
 		/**
 		 * Updates the keyboardState of the keys
 		 */
-		public function update() : void
+		public static function update() : void
 		{
 			var keyState : uint;
 			for (var i : int = 255; i >= 0; i--)
@@ -61,7 +66,7 @@ package org.sbrubbles
 		 * @warning Method called automatically
 		 * @param	Event
 		 */
-		private function onKeyDown(event : KeyboardEvent) : void
+		private static function onKeyDown(event : KeyboardEvent) : void
 		{
 			const keyState : uint = keyboardState[event.keyCode];
 			keyboardState[event.keyCode] = keyState == RELEASED ? TRIGGERED : keyState == PRESSED ? REPEATED : keyState;
@@ -73,7 +78,7 @@ package org.sbrubbles
 		 * @warning Method called automatically
 		 * @param	Event
 		 */
-		private function onKeyUp(event : KeyboardEvent) : void
+		private static function onKeyUp(event : KeyboardEvent) : void
 		{
 			keyboardState[event.keyCode] = JUST_RELEASED;
 		}
@@ -84,7 +89,7 @@ package org.sbrubbles
 		 * @param  Key code
 		 * @return If the key is down 
 		 */
-		public function isDown(code : uint) : Boolean
+		public static function isDown(code : uint) : Boolean
 		{
 			const keyState : uint = keyboardState[code];
 			return !((keyState == RELEASED) || (keyState == JUST_RELEASED));
@@ -95,7 +100,7 @@ package org.sbrubbles
 		 * 
 		 * @return If there is any key down
 		 */
-		public function isAnyKeyDown() : Boolean
+		public static function isAnyKeyDown() : Boolean
 		{
 			var keyState : uint;
 			for (var i : int = 255; i >= 0; i--)
@@ -113,7 +118,7 @@ package org.sbrubbles
 		 * @param  Key code
 		 * @return If the key was pressed right now
 		 */
-		public function isTriggered(code : uint) : Boolean
+		public static function isTriggered(code : uint) : Boolean
 		{
 			return (keyboardState[code] == TRIGGERED);
 		}
@@ -124,7 +129,7 @@ package org.sbrubbles
 		 * @param  Key code
 		 * @return If the key is being pressed
 		 */
-		public function isPressed(code : uint) : Boolean
+		public static function isPressed(code : uint) : Boolean
 		{
 			return (keyboardState[code] == PRESSED);
 		}
@@ -135,7 +140,7 @@ package org.sbrubbles
 		 * @param  Key code
 		 * @return If the key is in the repeat cycle
 		 */
-		public function isRepeated(code : uint) : Boolean
+		public static function isRepeated(code : uint) : Boolean
 		{
 			return (keyboardState[code] == REPEATED);
 		}
@@ -146,7 +151,7 @@ package org.sbrubbles
 		 * @param  Key code
 		 * @return If the key was released right now
 		 */
-		public function isJustReleased(code : uint): Boolean
+		public static function isJustReleased(code : uint): Boolean
 		{
 			return (keyboardState[code] == JUST_RELEASED);
 		}
@@ -157,7 +162,7 @@ package org.sbrubbles
 		 * @param  Key code
 		 * @return If the key is released
 		 */
-		public function isUp(code : uint) : Boolean
+		public static function isUp(code : uint) : Boolean
 		{
 			return keyboardState[code] == RELEASED;
 		}

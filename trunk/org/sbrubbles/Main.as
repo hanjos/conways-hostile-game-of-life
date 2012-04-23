@@ -25,12 +25,10 @@ package org.sbrubbles
 		public static const WIN:String = "WIN"
 		public static const MAP_EDITOR:String = "MAP_EDITOR"
 		
-		private var _input:Input
 		private var _gameState:GameState
 		
 		public function Main() 
 		{
-			_input = new Input(this)
 			_gameState = new GameState()
 			
 			start()
@@ -44,6 +42,9 @@ package org.sbrubbles
 		{
 			// set the main update callback for all systems
 			stage.addEventListener(Event.ENTER_FRAME, update, false, 0, true)
+			
+			// start input capturing
+			Input.init(stage)
 			
 			// register all game contexts
 			Contexts.register(MAIN_MENU, new MainMenu(this))
@@ -60,16 +61,13 @@ package org.sbrubbles
 		private function update(e:Event):void 
 		{
 			// process global input
-			_input.update()
+			Input.update()
 			
 			// update current context
             Contexts.update()
 		}
 		
 		// === properties ===
-		/** @return the input manager. */
-		public function get input():Input { return _input }
-		
 		/** @return the shared game state. */
 		public function get gameState():GameState { return _gameState }
 	}
