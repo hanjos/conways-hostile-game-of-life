@@ -1,6 +1,8 @@
 package org.sbrubbles.context.game 
 {
 	import flash.geom.Point;
+	import org.sbrubbles.gameoflife.Block;
+	import org.sbrubbles.gameoflife.Grid;
 	/**
 	 * The hero controlled by the player.
 	 * 

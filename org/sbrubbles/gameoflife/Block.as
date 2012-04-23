@@ -2,7 +2,7 @@
 Originally stolen from http://www.interactionfigure.nl/2008/conways-game-of-life-in-flash/, with several modifications.
 I hope the author doesn't mind...
 */
-package org.sbrubbles.context.game {
+package org.sbrubbles.gameoflife {
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;

@@ -2,6 +2,8 @@ package org.sbrubbles.context.game
 {
 	import flash.display.Stage;
 	import flash.geom.Point;
+	import org.sbrubbles.gameoflife.Block;
+	import org.sbrubbles.gameoflife.Grid;
 	
 	/**
 	 * Holds game state shared between contexts.
