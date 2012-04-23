@@ -1,6 +1,6 @@
 package org.sbrubbles.context.mainmenu 
 {
-	import org.sbrubbles.fla.IntroductionMenu; // defined in the FLA
+	import org.sbrubbles.fla.IntroductionWidget; // defined in the FLA
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
@@ -21,7 +21,7 @@ package org.sbrubbles.context.mainmenu
 	public class MainMenu extends Context
 	{
 		private var _background:Grid
-		private var _menu:IntroductionMenu
+		private var _menu:IntroductionWidget
 		
 		public function MainMenu(main:Main) 
 		{
@@ -39,7 +39,7 @@ package org.sbrubbles.context.mainmenu
 			
 			addChild(background);
 			
-			var menu = getMenu();
+			var menu = new IntroductionWidget();
 			menu.x = (owner.stage.stageWidth - menu.width) / 2
 			menu.y = (owner.stage.stageHeight - menu.height) / 2
 			
@@ -59,14 +59,19 @@ package org.sbrubbles.context.mainmenu
 			}
 			
 			if (Input.isPressed(Keyboard.SPACE)) { // go to the game
-				owner.gameState.reset()
 				Contexts.goTo(Main.GAME)
 			}
 			
 			if (Input.isPressed(Keyboard.E)) { // go to the map editor
-				owner.gameState.reset()
 				Contexts.goTo(Main.MAP_EDITOR)
 			}
+		}
+		
+		public override function terminate():void
+		{
+			owner.gameState.reset()
+			
+			super.terminate()
 		}
 		
 		/**
@@ -80,14 +85,6 @@ package org.sbrubbles.context.mainmenu
 				_background = new Grid()
 				
 			return _background
-		}
-		
-		private function getMenu():IntroductionMenu {
-			if (_menu == null) {
-				_menu = new IntroductionMenu()
-			}
-			
-			return _menu
 		}
 	}
 }
