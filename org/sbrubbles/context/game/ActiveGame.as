@@ -2,6 +2,7 @@ package org.sbrubbles.context.game
 {
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
+	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
 	
 	/**
@@ -49,7 +50,7 @@ package org.sbrubbles.context.game
 			
 			// check if the hero's still alive
 			if (hero.health <= 0) {
-				owner.contexts.goTo(Main.DEAD_HERO)
+				Contexts.goTo(Main.DEAD_HERO)
 				return
 			}
 			
@@ -59,7 +60,7 @@ package org.sbrubbles.context.game
 			} 
 			
 			if (blocksBelow.some(isEndArea)) { // win!
-				owner.contexts.goTo(Main.WIN)
+				Contexts.goTo(Main.WIN)
 				return
 			}
 			
@@ -86,7 +87,7 @@ package org.sbrubbles.context.game
 			}
 			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
 				owner.gameState.reset()
-				owner.contexts.goTo(Main.MAIN_MENU)
+				Contexts.goTo(Main.MAIN_MENU)
 			}
 		}
 	}

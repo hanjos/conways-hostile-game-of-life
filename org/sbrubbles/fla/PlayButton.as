@@ -3,6 +3,10 @@ package org.sbrubbles.fla
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	
+	import org.sbrubbles.Main;
+	import org.sbrubbles.context.Contexts;
+	
+	
 	/**
 	 * Leads the player from the main menu screen to 
 	 * @author Humberto Anjos
@@ -16,7 +20,8 @@ package org.sbrubbles.fla
 		
 		private function mouseClicked(e:MouseEvent)
 		{
-			trace("mouse clicked!")
+			Contexts.goTo(Main.GAME)
+			e.stopPropagation()
 		}
 	}
 

@@ -8,6 +8,7 @@ package org.sbrubbles.context.mainmenu
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
+	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
 	
 	/**
@@ -58,12 +59,12 @@ package org.sbrubbles.context.mainmenu
 			
 			if (owner.input.isPressed(Keyboard.SPACE)) { // go to the game
 				owner.gameState.reset()
-				owner.contexts.goTo(Main.ACTIVE_GAME)
+				Contexts.goTo(Main.GAME)
 			}
 			
 			if (owner.input.isPressed(Keyboard.E)) { // go to the map editor
 				owner.gameState.reset()
-				owner.contexts.goTo(Main.MAP_EDITOR)
+				Contexts.goTo(Main.MAP_EDITOR)
 			}
 		}
 		

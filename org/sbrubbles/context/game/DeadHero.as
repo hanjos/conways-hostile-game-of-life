@@ -7,6 +7,7 @@ package org.sbrubbles.context.game
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
+	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
 	
 	/**
@@ -48,12 +49,12 @@ package org.sbrubbles.context.game
 		{
 			if (owner.input.isPressed(Keyboard.SPACE)) { // try again
 				owner.gameState.reset()
-				owner.contexts.goTo(Main.ACTIVE_GAME)
+				Contexts.goTo(Main.GAME)
 			}
 			
 			if (owner.input.isPressed(Keyboard.Q)) { // go back to the main menu
 				owner.gameState.reset()
-				owner.contexts.goTo(Main.MAIN_MENU)
+				Contexts.goTo(Main.MAIN_MENU)
 			}
 		}
 		
