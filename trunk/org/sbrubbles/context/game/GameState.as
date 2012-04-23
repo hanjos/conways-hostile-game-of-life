@@ -12,12 +12,9 @@ package org.sbrubbles.context.game
 	{
 		private var _grid:Grid
 		private var _hero:Hero
-		private var _stage:Stage
 		
-		public function GameState(stage:Stage)
+		public function GameState()
 		{
-			_stage = stage
-			
 			reset()
 		}
 		
@@ -26,7 +23,7 @@ package org.sbrubbles.context.game
 		 */
 		public function reset()
 		{
-			_grid = loadMap(new Grid(_stage))
+			_grid = loadMap(new Grid())
 			_hero = new Hero(new Point(0, 0), grid, 8)
 		}
 		

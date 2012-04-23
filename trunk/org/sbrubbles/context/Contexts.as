@@ -14,19 +14,26 @@ package org.sbrubbles.context
 	 */
 	public class Contexts
 	{
-		private var _contexts:Dictionary // <String, Context>
-		private var _current:Context
+		private static var _contexts:Dictionary // <String, Context>
+		private static var _current:Context
 		
 		public function Contexts() 
 		{
+			
+		}
+		
+		/**
+		 * Static constructor.
+		 */
+		{
 			_contexts = new Dictionary()
-			_current = null
+			_current = null	
 		}
 		
 		/**
 		 * Updates the current context, or does nothing if no context is active.
 		 */
-		public function update():void
+		public static function update():void
 		{
 			if (_current == null)
 				return;
@@ -41,7 +48,7 @@ package org.sbrubbles.context
 		 * @param context the context. If null, removes the previous mapping.
 		 * @return the context previously mapped to the given id, or null if there were none.
 		 */
-		public function register(id:String, context:Context) :Context
+		public static function register(id:String, context:Context) :Context
 		{
 			var old:Context = _contexts[id]
 			
@@ -66,7 +73,7 @@ package org.sbrubbles.context
 		 * 
 		 * @param id the context to load.
 		 */
-		public function goTo(id:String):void
+		public static function goTo(id:String):void
 		{
 			// TODO error handling
 			setCurrent(_contexts[id])
@@ -75,7 +82,7 @@ package org.sbrubbles.context
 		/**
 		 * Terminates the current context, without starting a new one.
 		 */
-		public function deactivate():void
+		public static function deactivate():void
 		{
 			setCurrent(null)
 		}
@@ -85,17 +92,17 @@ package org.sbrubbles.context
 		/**
 		 * @return the current active context, or null if no context is active.
 		 */
-		public function get current():Context { return _current }
-		private function setCurrent(_curr:Context) 
+		public static function get current():Context { return _current }
+		private static function setCurrent(curr:Context) 
 		{ 	// FAIL ActionScript doesn't like public getters and private setters
-			if (this._current != null) {
-				this._current.terminate()
+			if (_current != null) {
+				_current.terminate()
 			}
 			
-			this._current = _curr
+			_current = curr
 			
-			if (this._current != null) {
-				this._current.start()
+			if (_current != null) {
+				_current.start()
 			}
 		}
 	}

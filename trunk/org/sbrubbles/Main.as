@@ -20,20 +20,18 @@ package org.sbrubbles
 	public class Main extends MovieClip
 	{
 		public static const MAIN_MENU:String = "MAIN_MENU"
-		public static const ACTIVE_GAME:String = "ACTIVE_GAME"
+		public static const GAME:String = "ACTIVE_GAME"
 		public static const DEAD_HERO:String = "DEAD_HERO"
 		public static const WIN:String = "WIN"
 		public static const MAP_EDITOR:String = "MAP_EDITOR"
 		
-		private var _contexts:Contexts
 		private var _input:Input
 		private var _gameState:GameState
 		
 		public function Main() 
 		{
 			_input = new Input(this)
-			_contexts = new Contexts()
-			_gameState = new GameState(stage)
+			_gameState = new GameState()
 			
 			start()
 		}
@@ -48,14 +46,14 @@ package org.sbrubbles
 			stage.addEventListener(Event.ENTER_FRAME, update, false, 0, true)
 			
 			// register all game contexts
-			_contexts.register(MAIN_MENU, new MainMenu(this))
-			_contexts.register(ACTIVE_GAME, new ActiveGame(this))
-			_contexts.register(DEAD_HERO, new DeadHero(this))
-			_contexts.register(WIN, new Win(this))
-			_contexts.register(MAP_EDITOR, new MapEditor(this))
+			Contexts.register(MAIN_MENU, new MainMenu(this))
+			Contexts.register(GAME, new ActiveGame(this))
+			Contexts.register(DEAD_HERO, new DeadHero(this))
+			Contexts.register(WIN, new Win(this))
+			Contexts.register(MAP_EDITOR, new MapEditor(this))
 			
 			// go to the main menu
-			_contexts.goTo(MAIN_MENU)
+			Contexts.goTo(MAIN_MENU)
 		}
 		
 		// === event handling ===
@@ -65,13 +63,10 @@ package org.sbrubbles
 			_input.update()
 			
 			// update current context
-            _contexts.update()
+            Contexts.update()
 		}
 		
 		// === properties ===
-		/** @return the context manager. */
-		public function get contexts():Contexts { return _contexts }
-		
 		/** @return the input manager. */
 		public function get input():Input { return _input }
 		

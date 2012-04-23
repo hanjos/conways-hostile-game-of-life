@@ -2,6 +2,7 @@ package org.sbrubbles.context.mapeditor
 {
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
+	import org.sbrubbles.context.Contexts;
 	import org.sbrubbles.Main;
 	
 	/**
@@ -60,7 +61,7 @@ package org.sbrubbles.context.mapeditor
 			} else if (owner.input.isPressed(Keyboard.SPACE)) { // start/stop the running
 				_running = !_running
 			} else if (owner.input.isPressed(Keyboard.Q)) { // return to the main menu
-				owner.contexts.goTo(Main.MAIN_MENU)
+				Contexts.goTo(Main.MAIN_MENU)
 			}
 		}
 	}
