@@ -8,6 +8,7 @@ package org.sbrubbles.context.game
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.fla.WinWidget;
 	import org.sbrubbles.Main;
 	import org.sbrubbles.Input;
 	
@@ -18,8 +19,6 @@ package org.sbrubbles.context.game
 	 */
 	public class Win extends Context
 	{
-		private var _title:TextField
-		
 		public function Win(owner:Main) 
 		{
 			super(owner)
@@ -33,11 +32,11 @@ package org.sbrubbles.context.game
 			owner.gameState.grid.alpha = 0.5
 			addChild(owner.gameState.grid)
 			
-			var title = getTitle()
-			title.x = (owner.stage.stageWidth - title.width) / 2
-			title.y = (owner.stage.stageHeight - title.height) / 2
+			var widget = new WinWidget()
+			widget.x = (owner.stage.stageWidth - widget.width) / 2
+			widget.y = (owner.stage.stageHeight - widget.height) / 2
 			
-			addChild(getTitle())
+			addChild(widget)
 		}
 		
 		public override function update():void
@@ -47,45 +46,22 @@ package org.sbrubbles.context.game
 			checkInput()
 		}
 		
+		public override function terminate():void
+		{
+			owner.gameState.reset()
+			
+			super.terminate()
+		}
+		
 		private function checkInput():void 
 		{
 			if (Input.isPressed(Keyboard.SPACE)) { // try again
-				owner.gameState.reset()
 				Contexts.goTo(Main.GAME)
 			}
 			
 			if (Input.isPressed(Keyboard.Q)) { // go back to the main menu
-				owner.gameState.reset()
 				Contexts.goTo(Main.MAIN_MENU)
 			}
-		}
-		
-		/**
-		 * Returns the title, creating it lazily.
-		 * 
-		 * @return the non-null title.
-		 */
-		private function getTitle():TextField
-		{
-			if(_title == null) {
-				_title = new TextField();
-				_title.background = true
-				_title.border = false
-				_title.type = TextFieldType.DYNAMIC // non-editable
-				_title.selectable = false
-				_title.autoSize = TextFieldAutoSize.LEFT
-				
-
-				var format = new TextFormat();
-				format.size = 25
-				format.align = TextFormatAlign.CENTER
-				format.bold = true
-
-				_title.defaultTextFormat = format
-				_title.text = "Congratulations!\nDo you want to try again?"
-			}
-			
-			return _title;
 		}
 	}
 
