@@ -1,5 +1,6 @@
 package org.sbrubbles.context.mainmenu 
 {
+	import org.sbrubbles.fla.IntroductionMenu; // defined in the FLA
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
@@ -18,8 +19,7 @@ package org.sbrubbles.context.mainmenu
 	public class MainMenu extends Context
 	{
 		private var _background:Grid
-		private var _title:TextField
-		private var _subtitle:TextField
+		private var _menu:IntroductionMenu
 		
 		public function MainMenu(main:Main) 
 		{
@@ -37,17 +37,11 @@ package org.sbrubbles.context.mainmenu
 			
 			addChild(background);
 			
-			var title:TextField = getTitle();
-			title.x = (owner.stage.stageWidth - title.width)/2
-			title.y = (owner.stage.stageHeight - title.height)/2
+			var menu = getMenu();
+			menu.x = (owner.stage.stageWidth - menu.width) / 2
+			menu.y = (owner.stage.stageHeight - menu.height) / 2
 			
-			addChild(title);
-			
-			var subtitle:TextField = getSubtitle();
-			subtitle.x = (owner.stage.stageWidth - subtitle.width) / 2
-			subtitle.y = title.y + title.height + 2
-			
-			addChild(subtitle);
+			addChild(menu);
 		}
 		
 		public override function update():void
@@ -74,62 +68,6 @@ package org.sbrubbles.context.mainmenu
 		}
 		
 		/**
-		 * Returns the title, creating it lazily.
-		 * 
-		 * @return the non-null title.
-		 */
-		private function getTitle():TextField
-		{
-			if(_title == null) {
-				_title = new TextField();
-				_title.background = true
-				_title.border = false
-				_title.type = TextFieldType.DYNAMIC // non-editable
-				_title.selectable = false
-				_title.autoSize = TextFieldAutoSize.LEFT
-				_title.alpha = 1
-
-				var format = new TextFormat();
-				format.size = 25
-				format.align = TextFormatAlign.CENTER
-				format.bold = true
-
-				_title.defaultTextFormat = format
-				_title.text = "Conway's Hostile Game of Life"
-			}
-			
-			return _title;
-		}
-		
-		/**
-		 * Returns the subtitle, creating it lazily.
-		 * 
-		 * @return the non-null subtitle.
-		 */
-		private function getSubtitle():TextField
-		{
-			if(_subtitle == null) {
-				_subtitle = new TextField();
-				_subtitle.background = true
-				_subtitle.border = false
-				_subtitle.type = TextFieldType.DYNAMIC // non-editable
-				_subtitle.selectable = false
-				_subtitle.autoSize = TextFieldAutoSize.LEFT
-				_subtitle.alpha = 1
-
-				var format = new TextFormat();
-				format.size = 18
-				format.align = TextFormatAlign.CENTER
-				format.bold = true
-
-				_subtitle.defaultTextFormat = format
-				_subtitle.text = "Press SPACE to begin..."
-			}
-			
-			return _subtitle;
-		}
-		
-		/**
 		 * Returns the background, creating it lazily.
 		 * 
 		 * @return the non-null background.
@@ -137,9 +75,17 @@ package org.sbrubbles.context.mainmenu
 		private function getBackground():Grid 
 		{
 			if (_background == null)
-				_background = new Grid(owner.stage)
+				_background = new Grid()
 				
 			return _background
+		}
+		
+		private function getMenu():IntroductionMenu {
+			if (_menu == null) {
+				_menu = new IntroductionMenu()
+			}
+			
+			return _menu
 		}
 	}
 }

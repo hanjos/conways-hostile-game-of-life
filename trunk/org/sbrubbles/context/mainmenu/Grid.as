@@ -29,11 +29,7 @@ package org.sbrubbles.context.mainmenu {
 		private var nBlocksTotal:Number;
 		private var aBlocks:Array;
 
-		private var _stage:Stage
-		
-		public function Grid(_stage:Stage) {
-			this._stage = _stage
-			
+		public function Grid() {
 			var lines:MovieClip = new MovieClip();
 			
 			lines.graphics.lineStyle(1, LINE_RGB, LINE_ALPHA);
@@ -70,7 +66,7 @@ package org.sbrubbles.context.mainmenu {
 				}
 			}
 			//////
-			_stage.addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
+			addEventListener(MouseEvent.MOUSE_UP, mouseUpped);
 			
 			this.addChildAt(lines,1);
 		}
