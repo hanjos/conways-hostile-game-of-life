@@ -1,6 +1,7 @@
 package org.sbrubbles.context.mainmenu 
 {
 	import org.sbrubbles.fla.IntroductionWidget; // defined in the FLA
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
@@ -9,6 +10,8 @@ package org.sbrubbles.context.mainmenu
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.gameoflife.Grid;
+	import org.sbrubbles.gameoflife.Pattern;
 	import org.sbrubbles.Main;
 	import org.sbrubbles.Input;
 	
@@ -20,12 +23,16 @@ package org.sbrubbles.context.mainmenu
 	 */
 	public class MainMenu extends Context
 	{
-		private var _background:Grid
+		private var _grid:Grid
 		private var _menu:IntroductionWidget
 		
 		public function MainMenu(main:Main) 
 		{
 			super(main);
+			
+			_grid = new Grid()
+			
+			addEventListener(MouseEvent.CLICK, mouseClicked);
 		}
 		
 		// builds the screen
@@ -33,11 +40,10 @@ package org.sbrubbles.context.mainmenu
 		{
 			super.start()
 			
-			var background = getBackground();
-			background.clear()
-			background.alpha = 0.5
+			_grid.clear()
+			_grid.alpha = 0.5
 			
-			addChild(background);
+			addChild(_grid);
 			
 			var menu = new IntroductionWidget();
 			menu.x = (owner.stage.stageWidth - menu.width) / 2
@@ -50,8 +56,8 @@ package org.sbrubbles.context.mainmenu
 		{
 			super.update() // FAIL do you HAVE to always call the super?
 			
-			// update the background
-			_background.tick()
+			// update the background grid
+			_grid.update()
 			
 			// check input
 			checkInput();
@@ -68,7 +74,7 @@ package org.sbrubbles.context.mainmenu
 		private function checkInput():void 
 		{
 			if (Input.isPressed(Keyboard.C)) { // clear the background
-				_background.clear()
+				_grid.clear()
 			}
 			
 			if (Input.isPressed(Keyboard.E)) { // go to the map editor
@@ -76,17 +82,18 @@ package org.sbrubbles.context.mainmenu
 			}
 		}
 		
-		/**
-		 * Returns the background, creating it lazily.
-		 * 
-		 * @return the non-null background.
-		 */
-		private function getBackground():Grid 
+		private function mouseClicked(e:MouseEvent):void 
 		{
-			if (_background == null)
-				_background = new Grid()
-				
-			return _background
+			var x: Number = Math.floor(this.mouseX / _grid.gridScale)
+			var y: Number = Math.floor(this.mouseY / _grid.gridScale)
+			
+			if(Math.random() < 1/3) {
+				Pattern.GLIDER.applyOn(_grid, x, y)
+			} else if(Math.random() < 2/3){
+				Pattern.ACORN.applyOn(_grid, x, y)
+			} else {
+				Pattern.GOSPER_GLIDER_GUN.applyOn(_grid, x, y)
+			}
 		}
 	}
 }
