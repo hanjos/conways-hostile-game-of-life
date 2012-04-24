@@ -3,6 +3,8 @@ package org.sbrubbles.context.game
 	import flash.geom.Point;
 	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
+	import org.sbrubbles.util.Util;
+	
 	/**
 	 * The hero controlled by the player.
 	 * 
@@ -40,7 +42,7 @@ package org.sbrubbles.context.game
 			var x:Number = _position.x
 			var y:Number = _position.y
 			
-			var argb:uint = addAlphaTo(_alpha, _color)
+			var argb:uint = Util.addAlphaTo(_alpha, _color)
 			_grid.canvas.setPixel32(x, y, argb); 	 _grid.canvas.setPixel32(x + 1, y, argb)
 			_grid.canvas.setPixel32(x, y + 1, argb); _grid.canvas.setPixel32(x + 1, y + 1, argb)
 		}
@@ -69,11 +71,6 @@ package org.sbrubbles.context.game
 		public function reset():void
 		{
 			_health = MAX_HEALTH
-		}
-		
-		private function addAlphaTo(alpha:uint, rgb:uint):uint
-		{
-			return (alpha * (1 << 24)) | rgb
 		}
 		
 		// === properties ===

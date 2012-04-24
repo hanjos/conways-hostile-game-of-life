@@ -1,6 +1,8 @@
 package org.sbrubbles.context.mapeditor 
 {
+	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 	import org.sbrubbles.context.Context;
@@ -18,6 +20,9 @@ package org.sbrubbles.context.mapeditor
 	 */
 	public class MapEditor extends Context
 	{
+		private static const SHADOW_COLOR:Number = 0xFFC0C0C0
+		private static const TRANSPARENT_COLOR:Number = 0x00000000
+		
 		private var _grid:Grid
 		private var _running:Boolean
 		private var _selectedPattern:String
@@ -41,6 +46,7 @@ package org.sbrubbles.context.mapeditor
 			super.start()
 			
 			addEventListener(MouseEvent.CLICK, mouseClicked, false, 0, true)
+			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved, false, 0, true)
 			
 			_grid = new Grid()
 			_running = false
@@ -62,6 +68,7 @@ package org.sbrubbles.context.mapeditor
 		public override function terminate():void
 		{
 			removeEventListener(MouseEvent.CLICK, mouseClicked)
+			removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoved)
 			
 			super.terminate()
 		}
@@ -69,15 +76,15 @@ package org.sbrubbles.context.mapeditor
 		private function checkInput()
 		{
 			if (Input.isPressed(Keyboard.G)) { // glider
-				_selectedPattern = "glider"
+				selectPattern("glider")
 			} else if (Input.isPressed(Keyboard.A)) { // acorn
-				_selectedPattern = "acorn"
+				selectPattern("acorn")
 			} else if (Input.isPressed(Keyboard.O)) { // Gosper's glider gun
-				_selectedPattern = "gosperGliderGun"
+				selectPattern("gosperGliderGun")
 			} else if (Input.isPressed(Keyboard.E)) { // ending
-				_selectedPattern = "end"
+				selectPattern("end")
 			} else if (Input.isPressed(Keyboard.U)) { // unselect a pattern
-				_selectedPattern = null
+				selectPattern(null)
 			} else if (Input.isPressed(Keyboard.C)) { // clear the grid and stop running
 				_grid.clear()
 				_running = false
@@ -86,6 +93,12 @@ package org.sbrubbles.context.mapeditor
 			} else if (Input.isPressed(Keyboard.Q)) { // return to the main menu
 				Contexts.goTo(Main.MAIN_MENU)
 			}
+		}
+		
+		private function selectPattern(patt:String):void
+		{
+			_selectedPattern = patt // save the selection
+			drawShadowOf(patt) // update the shadow
 		}
 		
 		private function mouseClicked(e:MouseEvent):void 
@@ -98,6 +111,36 @@ package org.sbrubbles.context.mapeditor
 			} else { // apply the selected pattern
 				var state = _selectedPattern == "end" ? Block.END : Block.LIVE
 				_patterns[_selectedPattern].applyOn(state, _grid, x, y)
+			}
+		}
+		
+		private function mouseMoved(e:MouseEvent):void
+		{
+			drawShadowOf(_selectedPattern);
+		}
+		
+		private function drawShadowOf(patt:String):void 
+		{
+			var canvas:BitmapData = _grid.canvas // draw on the canvas, not the underlying map
+			
+			// clear the canvas
+			canvas.fillRect(canvas.rect, TRANSPARENT_COLOR)
+			
+			if (patt == null) {
+				return // nothing else to do
+			}
+		
+			// get the points to shadow
+			var x:Number = Math.floor(this.mouseX / _grid.gridScale)
+			var y:Number = Math.floor(this.mouseY / _grid.gridScale)
+			var p:Point = new Point(x, y)
+			var pattern:Pattern = _patterns[patt]
+			
+			var points = pattern.offsets.map(function(item:Point, index:int, array:Array) { return item.add(p) })
+			
+			// draw them
+			for each(var pp in points) {
+				canvas.setPixel32(pp.x, pp.y, SHADOW_COLOR)
 			}
 		}
 	}
