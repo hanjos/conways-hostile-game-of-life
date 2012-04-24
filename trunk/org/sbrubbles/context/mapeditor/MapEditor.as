@@ -24,6 +24,8 @@ package org.sbrubbles.context.mapeditor
 		private var _running:Boolean
 		private var _selectedPattern:SelectedPattern
 		
+		private var patt:String
+		
 		public function MapEditor(owner:Main) 
 		{
 			super(owner)
@@ -68,14 +70,24 @@ package org.sbrubbles.context.mapeditor
 		{
 			if (Input.isPressed(Keyboard.G)) { // glider
 				_selectedPattern.pattern = Pattern.GLIDER
+				
+				patt = "glider"
 			} else if (Input.isPressed(Keyboard.A)) { // acorn
 				_selectedPattern.pattern = Pattern.ACORN
+				
+				patt = "acorn"
 			} else if (Input.isPressed(Keyboard.O)) { // Gosper's glider gun
 				_selectedPattern.pattern = Pattern.GOSPER_GLIDER_GUN
+				
+				patt = "Gosper's glider gun"
 			} else if (Input.isPressed(Keyboard.E)) { // ending
 				_selectedPattern.pattern = Pattern.SINGLE
+				
+				patt = "ending"
 			} else if (Input.isPressed(Keyboard.U)) { // unselect a pattern
 				_selectedPattern.pattern = null
+				
+				patt = "<no pattern>"
 			} else if (Input.isPressed(Keyboard.C)) { // clear the grid and stop running
 				_grid.clearMap()
 				_running = false
@@ -96,6 +108,8 @@ package org.sbrubbles.context.mapeditor
 			} else { // apply the selected pattern
 				var state = _selectedPattern.pattern == Pattern.SINGLE ? Block.END : Block.LIVE
 				_selectedPattern.pattern.applyOn(state, _grid, x, y)
+				
+				trace("added " + patt + " @ " + x + ", " + y)
 			}
 		}
 		

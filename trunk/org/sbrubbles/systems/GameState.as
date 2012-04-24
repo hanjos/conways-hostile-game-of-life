@@ -41,7 +41,7 @@ package org.sbrubbles.systems
 			var map:Map = Maps.named(_activeMap)
 			if (map != null) {
 				map.applyOn(_grid)
-				_hero = new Hero(map.start.clone(), _grid, 10) // FAIL Point is mutable; must make a clone
+				_hero = new Hero(map.start.clone(), _grid, 3) // FAIL Point is mutable; must make a clone
 			}
 		}
 		

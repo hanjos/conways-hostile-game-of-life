@@ -17,12 +17,13 @@ package org.sbrubbles.gameoflife
 		 * xxx
 		 */
 		public static const GLIDER:Pattern 
-			= new Pattern(
+			= new Pattern([
 				new Point(1, 0),
 				new Point(2, 1),
 				new Point(0, 2),
 				new Point(1, 2),
-				new Point(2, 2))
+				new Point(2, 2)
+			])
 		
 		/**
 		 * The pattern below, with . representing an empty cell and x a live 
@@ -32,14 +33,15 @@ package org.sbrubbles.gameoflife
 		 * xx..xxx
 		 */
 		public static const ACORN:Pattern 
-			= new Pattern(
+			= new Pattern([
 				new Point(0, 2),
 				new Point(1, 0),
 				new Point(1, 2),
 				new Point(3, 1),
 				new Point(4, 2),
 				new Point(5, 2),
-				new Point(6, 2))
+				new Point(6, 2)
+			])
 		
 		/**
 		 * The pattern below, with . representing an empty cell and x a live 
@@ -55,7 +57,7 @@ package org.sbrubbles.gameoflife
 		 * ............xx......................
 		 */
 		public static const GOSPER_GLIDER_GUN:Pattern 
-			= new Pattern(
+			= new Pattern([
 				// left 2x2 square
 				new Point(0, 4),
 				new Point(0, 5),
@@ -98,17 +100,43 @@ package org.sbrubbles.gameoflife
 				new Point(34, 2),
 				new Point(34, 3),
 				new Point(35, 2),
-				new Point(35, 3))
+				new Point(35, 3)
+			])
 
-		public static const SINGLE:Pattern = new Pattern(new Point(0, 0))
+		public static const SINGLE:Pattern = new Pattern([ new Point(0, 0) ])
 
+		/**
+		 * Returns a filled rectangle pattern, with the given dimensions.
+		 * 
+		 * @param width the width.
+		 * @param height the height.
+		 * @return a pattern with all points from (0, 0) to 
+		 * (width-1, height-1) filled, forming a rectangle.
+		 */
+		public static function rectangle(width:int, height:int):Pattern
+		{
+			var args = []
+			
+			for (var i:int = 0; i < width; i++) {
+				for (var j:int = 0; j < height; j++) {
+					args.push(new Point(i, j))
+				}
+			}
+			
+			return new Pattern(args)
+		}
+		
 		private var _offsets:Array
 		private var _state:Number // Block state
 		
 		/**
-		 * @param offsets Points representing the offsets from the top-left corner.
+		 * Creates a new pattern, holding the given points as relative 
+		 * positions from the top-left corner.
+		 * 
+		 * @param offsets Points representing the offsets from the top-left 
+		 * corner.
 		 */
-		public function Pattern(...offsets) 
+		public function Pattern(offsets:Array) 
 		{
 			_offsets = offsets
 		}
