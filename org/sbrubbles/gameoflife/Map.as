@@ -70,7 +70,7 @@ package org.sbrubbles.gameoflife
 		 * 
 		 * @return this instance.
 		 */
-		public function setAt(state:Number, ...positions):Map
+		public function setAt(state:Number, positions:Array):Map
 		{
 			for each(var p:Point in positions) { 
 				states[p.y * width + p.x] = state

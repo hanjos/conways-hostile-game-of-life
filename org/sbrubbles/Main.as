@@ -12,6 +12,7 @@ package org.sbrubbles
 	import org.sbrubbles.context.mapeditor.MapEditor;
 	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Map;
+	import org.sbrubbles.gameoflife.Pattern;
 	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.systems.GameState;
 	import org.sbrubbles.systems.Input;
@@ -94,15 +95,14 @@ package org.sbrubbles
 		{
 			var map:Map = new Map(100, 100)
 			
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(0, 72))
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(23, 52))
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(41, 33))
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(61, 11))
 			
-			
-			map.setAt(Block.END, 
-				new Point(96, 96), new Point(96, 97), new Point(96, 98), new Point(96, 99),
-				new Point(97, 96), new Point(97, 97), new Point(97, 98), new Point(97, 99),
-				new Point(98, 96), new Point(98, 97), new Point(98, 98), new Point(98, 99),
-				new Point(99, 96), new Point(99, 97), new Point(99, 98), new Point(99, 99))
-			
-			map.start = new Point(0, 0)
+			map.setAt(Block.END, Pattern.rectangle(2, 4).startingFrom(98, 45))
+				
+			map.start = new Point(0, 98)
 			
 			return map
 		}
