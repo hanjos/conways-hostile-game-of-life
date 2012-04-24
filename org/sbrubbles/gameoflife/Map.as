@@ -14,11 +14,25 @@ package org.sbrubbles.gameoflife
 		private var _height:int
 		private var _states:Array // length width * height
 		
+		private var _start:Point
+		
 		public function Map(width:int, height:int) 
 		{
 			_width = width
 			_height = height
+			_start = new Point(0, 0)
 			_states = []
+			
+			clear()
+		}
+		
+		public function clear():void
+		{
+			_states.splice(0, _states.length) // clears the previous array
+			
+			for (var i:int = 0; i < width * height; i++) {
+				_states.push(Block.DEAD)
+			}
 		}
 		
 		/**
@@ -33,11 +47,13 @@ package org.sbrubbles.gameoflife
 			}	
 			
 			// clear the grid
-			grid.clear()
+			grid.clearMap()
 			
 			// apply the positions on the grid
-			for (var state in patterns) {
-				grid.setBlocksAs.apply(grid, state, patterns[state])
+			for (var x:int = 0; x < width; x++) {
+				for (var y:int = 0; y < height; y++) {
+					grid.setBlocksAs(at(x, y), new Point(x, y))
+				}
 			}
 		}
 		
@@ -67,6 +83,8 @@ package org.sbrubbles.gameoflife
 		public function get width():int { return _width }
 		public function get height():int { return _height }
 		public function get states():Array { return _states }
+		public function get start():Point { return _start }
+		public function set start(start:Point):void { _start = start }
 	}
 
 }

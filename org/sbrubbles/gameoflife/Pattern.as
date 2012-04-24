@@ -125,8 +125,7 @@ package org.sbrubbles.gameoflife
 		 */
 		public function applyOn(state:Number, grid:Grid, x:Number, y:Number):Array
 		{
-			var p = new Point(x, y)
-			var args = offsets.map(function(item:Point, index:int, array:Array) { return item.add(p) } ) // adding the offsets to the origin
+			var args = startingFrom(x, y)
 			var result:Array = args.concat() // making a shallow copy to return
 			
 			args.unshift(state) // putting the state first
@@ -134,6 +133,21 @@ package org.sbrubbles.gameoflife
 			grid.setBlocksAs.apply(grid, args) // needed because of the varargs
 			
 			return result
+		}
+		
+		/**
+		 * Returns the positions to be occupied by this pattern if applied from the given origin.
+		 * 
+		 * @param x the origin's x coordinate.
+		 * @param y the origin's y coordinate.
+		 * @return the positions to be occupied by this pattern if applied from the given origin.
+		 */
+		public function startingFrom(x:Number, y:Number):Array
+		{
+			var origin:Point = new Point(x, y)
+			return offsets.map(function(item:Point, index:int, array:Array) { 
+				return item.add(origin) 
+			})
 		}
 		
 		// === properties ===

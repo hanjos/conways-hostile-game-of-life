@@ -2,14 +2,20 @@ package org.sbrubbles
 {
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import org.sbrubbles.context.Contexts;
+	import flash.geom.Point;
+	import flash.utils.Dictionary;
 	import org.sbrubbles.context.game.ActiveGame;
 	import org.sbrubbles.context.game.DeadHero;
-	import org.sbrubbles.context.game.GameState;
 	import org.sbrubbles.context.game.Win;
 	import org.sbrubbles.context.instructions.Instructions;
 	import org.sbrubbles.context.mainmenu.MainMenu;
 	import org.sbrubbles.context.mapeditor.MapEditor;
+	import org.sbrubbles.gameoflife.Block;
+	import org.sbrubbles.gameoflife.Map;
+	import org.sbrubbles.systems.Contexts;
+	import org.sbrubbles.systems.GameState;
+	import org.sbrubbles.systems.Input;
+	import org.sbrubbles.systems.Maps;
 	
 	/**
 	 * The main class in the FLA, used to start the game and provide global 
@@ -20,12 +26,16 @@ package org.sbrubbles
 	 */
 	public class Main extends MovieClip
 	{
+		// === context names ===
 		public static const MAIN_MENU:String = "MAIN_MENU"
 		public static const INSTRUCTIONS:String = "INSTRUCTIONS"
 		public static const GAME:String = "ACTIVE_GAME"
 		public static const DEAD_HERO:String = "DEAD_HERO"
 		public static const WIN:String = "WIN"
 		public static const MAP_EDITOR:String = "MAP_EDITOR"
+		
+		// === map names ===
+		public static const GUNS_BLAZING:String = "guns_blazing"
 		
 		private var _gameState:GameState
 		
@@ -56,6 +66,12 @@ package org.sbrubbles
 			Contexts.register(WIN, new Win(this))
 			Contexts.register(MAP_EDITOR, new MapEditor(this))
 			
+			// register all known maps
+			Maps.register(GUNS_BLAZING, gunsBlazingMap())
+			
+			// load the only known map
+			gameState.loadMap(GUNS_BLAZING)
+			
 			// go to the main menu
 			Contexts.goTo(MAIN_MENU)
 		}
@@ -73,6 +89,23 @@ package org.sbrubbles
 		// === properties ===
 		/** @return the shared game state. */
 		public function get gameState():GameState { return _gameState }
+		
+		private function gunsBlazingMap():Map
+		{
+			var map:Map = new Map(100, 100)
+			
+			
+			
+			map.setAt(Block.END, 
+				new Point(96, 96), new Point(96, 97), new Point(96, 98), new Point(96, 99),
+				new Point(97, 96), new Point(97, 97), new Point(97, 98), new Point(97, 99),
+				new Point(98, 96), new Point(98, 97), new Point(98, 98), new Point(98, 99),
+				new Point(99, 96), new Point(99, 97), new Point(99, 98), new Point(99, 99))
+			
+			map.start = new Point(0, 0)
+			
+			return map
+		}
 	}
 
 }

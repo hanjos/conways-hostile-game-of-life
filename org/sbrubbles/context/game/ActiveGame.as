@@ -4,11 +4,11 @@ package org.sbrubbles.context.game
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
-	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
 	import org.sbrubbles.Main;
-	import org.sbrubbles.Input;
+	import org.sbrubbles.systems.Input;
 	
 	/**
 	 * A game context representing the running game.
@@ -26,6 +26,7 @@ package org.sbrubbles.context.game
 		// === context operations ===
 		public override function start():void
 		{
+			trace("ActiveGame.start: hero @ " + owner.gameState.hero.position)
 			super.start() // can't forget this call!
 			
 			addChild(owner.gameState.grid)
@@ -77,6 +78,7 @@ package org.sbrubbles.context.game
 		
 		public override function terminate():void
 		{
+			trace("ActiveGame.terminate: hero @ " + owner.gameState.hero.position)
 			removeEventListener(MouseEvent.CLICK, mouseClicked)
 			
 			super.terminate()

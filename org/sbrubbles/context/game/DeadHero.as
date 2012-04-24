@@ -7,10 +7,10 @@ package org.sbrubbles.context.game
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
-	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.fla.GameOverWidget;
 	import org.sbrubbles.Main;
-	import org.sbrubbles.Input;
+	import org.sbrubbles.systems.Input;
 	
 	/**
 	 * A game context loaded when the hero dies.
@@ -26,6 +26,7 @@ package org.sbrubbles.context.game
 		
 		public override function start():void
 		{
+			trace("DeadHero.start: hero @ " + owner.gameState.hero.position)
 			super.start() // FAIL without this it doesn't work
 			
 			owner.gameState.grid.alpha = 0.5
@@ -49,6 +50,7 @@ package org.sbrubbles.context.game
 		{
 			owner.gameState.reset()
 			
+			trace("DeadHero.terminate: hero @ " + owner.gameState.hero.position)
 			super.terminate()
 		}
 		

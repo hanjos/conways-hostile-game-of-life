@@ -4,7 +4,7 @@ package org.sbrubbles.fla
 	import flash.events.MouseEvent;
 	
 	import org.sbrubbles.Main;
-	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.systems.Contexts;
 	
 	/**
 	 * Leads the player to the instructions context. Its visuals are defined 

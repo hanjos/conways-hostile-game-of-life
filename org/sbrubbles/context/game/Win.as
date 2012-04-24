@@ -7,10 +7,10 @@ package org.sbrubbles.context.game
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
-	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.fla.WinWidget;
 	import org.sbrubbles.Main;
-	import org.sbrubbles.Input;
+	import org.sbrubbles.systems.Input;
 	
 	/**
 	 * Game context shown when the player is successful.

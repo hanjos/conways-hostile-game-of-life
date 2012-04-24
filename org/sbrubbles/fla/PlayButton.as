@@ -4,7 +4,7 @@ package org.sbrubbles.fla
 	import flash.events.MouseEvent;
 	
 	import org.sbrubbles.Main;
-	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.systems.Contexts;
 	
 	/**
 	 * Leads the player to a new game. Its visuals are defined in the FLA.
