@@ -10,6 +10,7 @@ package org.sbrubbles.context.mainmenu
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
 	import org.sbrubbles.gameoflife.Pattern;
 	import org.sbrubbles.Main;
@@ -88,11 +89,11 @@ package org.sbrubbles.context.mainmenu
 			var y: Number = Math.floor(this.mouseY / _grid.gridScale)
 			
 			if(Math.random() < 1/3) {
-				Pattern.GLIDER.applyOn(_grid, x, y)
+				Pattern.GLIDER.applyOn(Block.LIVE, _grid, x, y)
 			} else if(Math.random() < 2/3){
-				Pattern.ACORN.applyOn(_grid, x, y)
+				Pattern.ACORN.applyOn(Block.LIVE, _grid, x, y)
 			} else {
-				Pattern.GOSPER_GLIDER_GUN.applyOn(_grid, x, y)
+				Pattern.GOSPER_GLIDER_GUN.applyOn(Block.LIVE, _grid, x, y)
 			}
 		}
 	}

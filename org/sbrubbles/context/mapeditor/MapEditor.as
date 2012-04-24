@@ -5,6 +5,7 @@ package org.sbrubbles.context.mapeditor
 	import flash.utils.Dictionary;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
 	import org.sbrubbles.gameoflife.Pattern;
 	import org.sbrubbles.Input;
@@ -27,11 +28,12 @@ package org.sbrubbles.context.mapeditor
 			super(owner)
 			
 			_selectedPattern = null
+			
 			_patterns = new Dictionary()
 			_patterns.glider = Pattern.GLIDER
 			_patterns.acorn = Pattern.ACORN
 			_patterns.gosperGliderGun = Pattern.GOSPER_GLIDER_GUN
-			_patterns.end = Pattern.END
+			_patterns.end = Pattern.SINGLE
 		}
 		
 		public override function start():void
@@ -94,7 +96,8 @@ package org.sbrubbles.context.mapeditor
 			if (_selectedPattern == null) { // toggle the state of the underlying block
 				_grid.getBlockAt(x, y).toggleState()
 			} else { // apply the selected pattern
-				_patterns[_selectedPattern].applyOn(_grid, x, y)
+				var state = _selectedPattern == "end" ? Block.END : Block.LIVE
+				_patterns[_selectedPattern].applyOn(state, _grid, x, y)
 			}
 		}
 	}

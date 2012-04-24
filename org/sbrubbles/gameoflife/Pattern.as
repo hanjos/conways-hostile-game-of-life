@@ -17,7 +17,7 @@ package org.sbrubbles.gameoflife
 		 * xxx
 		 */
 		public static const GLIDER:Pattern 
-			= new Pattern(Block.LIVE, 
+			= new Pattern(
 				new Point(1, 0),
 				new Point(2, 1),
 				new Point(0, 2),
@@ -32,7 +32,7 @@ package org.sbrubbles.gameoflife
 		 * xx..xxx
 		 */
 		public static const ACORN:Pattern 
-			= new Pattern(Block.LIVE,
+			= new Pattern(
 				new Point(0, 2),
 				new Point(1, 0),
 				new Point(1, 2),
@@ -55,7 +55,7 @@ package org.sbrubbles.gameoflife
 		 * ............xx......................
 		 */
 		public static const GOSPER_GLIDER_GUN:Pattern 
-			= new Pattern(Block.LIVE,
+			= new Pattern(
 				// left 2x2 square
 				new Point(0, 4),
 				new Point(0, 5),
@@ -100,18 +100,16 @@ package org.sbrubbles.gameoflife
 				new Point(35, 2),
 				new Point(35, 3))
 
-		public static const END:Pattern = new Pattern(Block.END, new Point(0, 0))
+		public static const SINGLE:Pattern = new Pattern(new Point(0, 0))
 
 		private var _offsets:Array
 		private var _state:Number // Block state
 		
 		/**
-		 * @param state the state to apply to the points of the pattern.
-		 * @param offsets Points representing offsets from the top-left corner.
+		 * @param offsets Points representing the offsets from the top-left corner.
 		 */
-		public function Pattern(state:Number, ...offsets) 
+		public function Pattern(...offsets) 
 		{
-			_state = state
 			_offsets = offsets
 		}
 		
@@ -123,18 +121,22 @@ package org.sbrubbles.gameoflife
 		 * @param grid the grid.
 		 * @param x the origin's x coordinate.
 		 * @param y the origin's y coordinate.
+		 * @return the points where the pattern was applied.
 		 */
-		public function applyOn(grid:Grid, x:Number, y:Number)
+		public function applyOn(state:Number, grid:Grid, x:Number, y:Number):Array
 		{
 			var p = new Point(x, y)
-			var args = offsets.map(function(item:Point, index:int, array:Array) { return item.add(p) }) // adding the offsets to the origin
+			var args = offsets.map(function(item:Point, index:int, array:Array) { return item.add(p) } ) // adding the offsets to the origin
+			var result:Array = args.concat() // making a shallow copy to return
+			
 			args.unshift(state) // putting the state first
 			
 			grid.setBlocksAs.apply(grid, args) // needed because of the varargs
+			
+			return result
 		}
 		
 		// === properties ===
-		private function get state():Number { return _state }
 		private function get offsets():Array { return _offsets }
 	}
 
