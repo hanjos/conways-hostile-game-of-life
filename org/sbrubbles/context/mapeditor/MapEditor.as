@@ -20,19 +20,14 @@ package org.sbrubbles.context.mapeditor
 	 */
 	public class MapEditor extends Context
 	{
-		private static const SHADOW_COLOR:Number = 0xFFC0C0C0
-		private static const TRANSPARENT_COLOR:Number = 0x00000000
-		
 		private var _grid:Grid
 		private var _running:Boolean
-		private var _selectedPattern:String
+		private var _selectedPattern:SelectedPattern
 		private var _patterns:Dictionary // <String, (Grid, Number, Number) -> void>
 		
 		public function MapEditor(owner:Main) 
 		{
 			super(owner)
-			
-			_selectedPattern = null
 			
 			_patterns = new Dictionary()
 			_patterns.glider = Pattern.GLIDER
@@ -49,6 +44,7 @@ package org.sbrubbles.context.mapeditor
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved, false, 0, true)
 			
 			_grid = new Grid()
+			_selectedPattern = new SelectedPattern(_grid)
 			_running = false
 			
 			addChild(_grid)
@@ -59,8 +55,10 @@ package org.sbrubbles.context.mapeditor
 			super.update()
 			
 			if (_running) {
-				_grid.update()
+				_grid.update() // update the grid
 			}
+			
+			_selectedPattern.update() // always update the shadow
 			
 			checkInput()
 		}
@@ -97,8 +95,7 @@ package org.sbrubbles.context.mapeditor
 		
 		private function selectPattern(patt:String):void
 		{
-			_selectedPattern = patt // save the selection
-			drawShadowOf(patt) // update the shadow
+			_selectedPattern.pattern = _patterns[patt] // save the selection
 		}
 		
 		private function mouseClicked(e:MouseEvent):void 
@@ -109,39 +106,17 @@ package org.sbrubbles.context.mapeditor
 			if (_selectedPattern == null) { // toggle the state of the underlying block
 				_grid.getBlockAt(x, y).toggleState()
 			} else { // apply the selected pattern
-				var state = _selectedPattern == "end" ? Block.END : Block.LIVE
-				_patterns[_selectedPattern].applyOn(state, _grid, x, y)
+				var state = _selectedPattern.pattern == Pattern.SINGLE ? Block.END : Block.LIVE
+				_selectedPattern.pattern.applyOn(state, _grid, x, y)
 			}
 		}
 		
 		private function mouseMoved(e:MouseEvent):void
 		{
-			drawShadowOf(_selectedPattern);
-		}
-		
-		private function drawShadowOf(patt:String):void 
-		{
-			var canvas:BitmapData = _grid.canvas // draw on the canvas, not the underlying map
-			
-			// clear the canvas
-			canvas.fillRect(canvas.rect, TRANSPARENT_COLOR)
-			
-			if (patt == null) {
-				return // nothing else to do
-			}
-		
-			// get the points to shadow
 			var x:Number = Math.floor(this.mouseX / _grid.gridScale)
 			var y:Number = Math.floor(this.mouseY / _grid.gridScale)
-			var p:Point = new Point(x, y)
-			var pattern:Pattern = _patterns[patt]
 			
-			var points = pattern.offsets.map(function(item:Point, index:int, array:Array) { return item.add(p) })
-			
-			// draw them
-			for each(var pp in points) {
-				canvas.setPixel32(pp.x, pp.y, SHADOW_COLOR)
-			}
+			_selectedPattern.position = new Point(x, y);
 		}
 	}
 }
