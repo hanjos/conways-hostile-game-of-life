@@ -3,6 +3,11 @@ package org.sbrubbles.context.mapeditor
 	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
+	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 	import org.sbrubbles.context.Context;
@@ -22,7 +27,9 @@ package org.sbrubbles.context.mapeditor
 	{
 		private var _grid:Grid
 		private var _running:Boolean
+		
 		private var _selectedPattern:SelectedPattern
+		private var _tooltip:TextField
 		
 		private var patt:String
 		
@@ -41,8 +48,10 @@ package org.sbrubbles.context.mapeditor
 			_grid = new Grid()
 			_selectedPattern = new SelectedPattern(_grid)
 			_running = false
+			_tooltip = makeTooltip()
 			
 			addChild(_grid)
+			addChild(_tooltip)
 		}
 		
 		public override function update():void
@@ -119,6 +128,29 @@ package org.sbrubbles.context.mapeditor
 			var y:Number = Math.floor(this.mouseY / _grid.gridScale)
 			
 			_selectedPattern.position = new Point(x, y);
+			_tooltip.x = Math.min(this.mouseX, _grid.width - _tooltip.width)
+			_tooltip.y = Math.max(this.mouseY + 2, _tooltip.height) - _tooltip.height - 2
+			_tooltip.text = x + "," + y
+		}
+		
+		private function makeTooltip():TextField
+		{
+			_tooltip = new TextField();
+			_tooltip.background = true
+			_tooltip.border = false
+			_tooltip.type = TextFieldType.DYNAMIC // non-editable
+			_tooltip.selectable = false
+			_tooltip.autoSize = TextFieldAutoSize.LEFT
+
+			var format = new TextFormat();
+			format.size = 10
+			format.align = TextFormatAlign.CENTER
+			format.bold = true
+
+			_tooltip.defaultTextFormat = format
+			_tooltip.text = ""
+			
+			return _tooltip
 		}
 	}
 }
