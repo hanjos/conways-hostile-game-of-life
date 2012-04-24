@@ -1,13 +1,10 @@
 package org.sbrubbles.context.mapeditor 
 {
-	import adobe.utils.ProductManager;
 	import flash.events.MouseEvent;
-	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 	import org.sbrubbles.context.Context;
 	import org.sbrubbles.context.Contexts;
-	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
 	import org.sbrubbles.gameoflife.Pattern;
 	import org.sbrubbles.Input;
