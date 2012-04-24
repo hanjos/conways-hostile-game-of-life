@@ -137,7 +137,7 @@ package org.sbrubbles.gameoflife
 		}
 		
 		// === properties ===
-		private function get offsets():Array { return _offsets }
+		public function get offsets():Array { return _offsets }
 	}
 
 }
