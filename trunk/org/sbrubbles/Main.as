@@ -95,12 +95,12 @@ package org.sbrubbles
 		{
 			var map:Map = new Map(100, 100)
 			
-			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(0, 72))
-			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(23, 52))
-			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(41, 33))
-			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(61, 11))
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(17, 82))
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(23, 57))
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(31, 33))
+			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(41, 9))
 			
-			map.setAt(Block.END, Pattern.rectangle(2, 4).startingFrom(98, 45))
+			map.setAt(Block.END, Pattern.rectangle(2, 4).startingFrom(98, 79))
 				
 			map.start = new Point(0, 98)
 			
