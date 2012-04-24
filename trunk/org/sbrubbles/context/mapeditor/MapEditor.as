@@ -6,11 +6,11 @@ package org.sbrubbles.context.mapeditor
 	import flash.ui.Keyboard;
 	import flash.utils.Dictionary;
 	import org.sbrubbles.context.Context;
-	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
 	import org.sbrubbles.gameoflife.Pattern;
-	import org.sbrubbles.Input;
+	import org.sbrubbles.systems.Input;
 	import org.sbrubbles.Main;
 	
 	/**
@@ -77,7 +77,7 @@ package org.sbrubbles.context.mapeditor
 			} else if (Input.isPressed(Keyboard.U)) { // unselect a pattern
 				_selectedPattern.pattern = null
 			} else if (Input.isPressed(Keyboard.C)) { // clear the grid and stop running
-				_grid.clear()
+				_grid.clearMap()
 				_running = false
 			} else if (Input.isPressed(Keyboard.SPACE)) { // start/stop the running
 				_running = !_running

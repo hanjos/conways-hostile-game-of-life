@@ -75,12 +75,24 @@ package org.sbrubbles.gameoflife {
 		
 		// === canvas operations ===
 		/**
-		 * Clears the canvas.
+		 * Clears the map.
 		 */
-		public function clear():void {
+		public function clearMap():void {
 			for (var i:uint = 0; i < nBlocksTotal; i++) {
 				aBlocks[i].state = Block.DEAD;
 			}
+		}
+		
+		/**
+		 * Clears the canvas.
+		 */
+		public function clearCanvas():void {
+			_canvas.fillRect(_canvas.rect, 0x00000000)
+		}
+		
+		public function clear():void {
+			clearMap();
+			clearCanvas();
 		}
 		
 		/**
@@ -153,7 +165,7 @@ package org.sbrubbles.gameoflife {
 			
 			// second, clear the canvas; the hero will draw himself here later 
 			// on
-			_canvas.fillRect(_canvas.rect, 0x00000000)
+			clearCanvas();
 		}
 		
 		// === properties ===

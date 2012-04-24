@@ -1,5 +1,5 @@
 ﻿/*
- * Shamelessly stolen and adapted from DreamKids (http://code.google.com/p/dreamkids/), 
+ * Shamelessly stolen and slightly adapted from DreamKids (http://code.google.com/p/dreamkids/), 
  * who apparently have obtained it somewhere else too :) 
  */
 
@@ -10,7 +10,7 @@
  * @author  Bruno Miguel de Oliveira Tamer <bmotamer@gmail.com>
  * @version 2012.01.01
  */
-package org.sbrubbles
+package org.sbrubbles.systems
 {
 	/**
 	 * Libraries

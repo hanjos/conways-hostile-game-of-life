@@ -9,12 +9,12 @@ package org.sbrubbles.context.mainmenu
 	import flash.text.TextFormatAlign;
 	import flash.ui.Keyboard;
 	import org.sbrubbles.context.Context;
-	import org.sbrubbles.context.Contexts;
+	import org.sbrubbles.systems.Contexts;
 	import org.sbrubbles.gameoflife.Block;
 	import org.sbrubbles.gameoflife.Grid;
 	import org.sbrubbles.gameoflife.Pattern;
 	import org.sbrubbles.Main;
-	import org.sbrubbles.Input;
+	import org.sbrubbles.systems.Input;
 	
 	/**
 	 * The starting menu. Informs what other contexts are available, and as a special treat holds a 
@@ -41,7 +41,7 @@ package org.sbrubbles.context.mainmenu
 		{
 			super.start()
 			
-			_grid.clear()
+			_grid.clearMap()
 			_grid.alpha = 0.5
 			
 			addChild(_grid);
@@ -75,7 +75,7 @@ package org.sbrubbles.context.mainmenu
 		private function checkInput():void 
 		{
 			if (Input.isPressed(Keyboard.C)) { // clear the background
-				_grid.clear()
+				_grid.clearMap()
 			}
 			
 			if (Input.isPressed(Keyboard.E)) { // go to the map editor
