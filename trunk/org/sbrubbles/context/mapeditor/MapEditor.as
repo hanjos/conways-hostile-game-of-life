@@ -23,17 +23,10 @@ package org.sbrubbles.context.mapeditor
 		private var _grid:Grid
 		private var _running:Boolean
 		private var _selectedPattern:SelectedPattern
-		private var _patterns:Dictionary // <String, (Grid, Number, Number) -> void>
 		
 		public function MapEditor(owner:Main) 
 		{
 			super(owner)
-			
-			_patterns = new Dictionary()
-			_patterns.glider = Pattern.GLIDER
-			_patterns.acorn = Pattern.ACORN
-			_patterns.gosperGliderGun = Pattern.GOSPER_GLIDER_GUN
-			_patterns.end = Pattern.SINGLE
 		}
 		
 		public override function start():void
@@ -55,7 +48,7 @@ package org.sbrubbles.context.mapeditor
 			super.update()
 			
 			if (_running) {
-				_grid.update() // update the grid
+				_grid.update() // update the grid if running
 			}
 			
 			_selectedPattern.update() // always update the shadow
@@ -74,15 +67,15 @@ package org.sbrubbles.context.mapeditor
 		private function checkInput()
 		{
 			if (Input.isPressed(Keyboard.G)) { // glider
-				selectPattern("glider")
+				_selectedPattern.pattern = Pattern.GLIDER
 			} else if (Input.isPressed(Keyboard.A)) { // acorn
-				selectPattern("acorn")
+				_selectedPattern.pattern = Pattern.ACORN
 			} else if (Input.isPressed(Keyboard.O)) { // Gosper's glider gun
-				selectPattern("gosperGliderGun")
+				_selectedPattern.pattern = Pattern.GOSPER_GLIDER_GUN
 			} else if (Input.isPressed(Keyboard.E)) { // ending
-				selectPattern("end")
+				_selectedPattern.pattern = Pattern.SINGLE
 			} else if (Input.isPressed(Keyboard.U)) { // unselect a pattern
-				selectPattern(null)
+				_selectedPattern.pattern = null
 			} else if (Input.isPressed(Keyboard.C)) { // clear the grid and stop running
 				_grid.clear()
 				_running = false
@@ -91,11 +84,6 @@ package org.sbrubbles.context.mapeditor
 			} else if (Input.isPressed(Keyboard.Q)) { // return to the main menu
 				Contexts.goTo(Main.MAIN_MENU)
 			}
-		}
-		
-		private function selectPattern(patt:String):void
-		{
-			_selectedPattern.pattern = _patterns[patt] // save the selection
 		}
 		
 		private function mouseClicked(e:MouseEvent):void 
