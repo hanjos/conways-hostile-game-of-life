@@ -96,7 +96,14 @@ package org.sbrubbles
 			var map:Map = new Map(100, 100)
 			
 			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(13, 20))
-			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(3, 37))
+			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(3, 50))
+			
+			// spaceship travelling down
+			var spaceshipGoingDown:Pattern = new Pattern([ 
+				new Point(0, 3), new Point(1, 4), new Point(2, 4), new Point(3, 4),
+				new Point(3, 3), new Point(3, 2), new Point(3, 1), new Point(2, 0)])
+				
+			map.setAt(Block.LIVE, spaceshipGoingDown.startingFrom(6, 70)) // XXX starting from x=6, y=70 the spaceship bounces off the glider gun harmlessly
 			
 			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(17, 82))
 			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(23, 57))
