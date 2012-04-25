@@ -26,7 +26,6 @@ package org.sbrubbles.context.game
 		// === context operations ===
 		public override function start():void
 		{
-			trace("ActiveGame.start: hero @ " + owner.gameState.hero.position)
 			super.start() // can't forget this call!
 			
 			addChild(owner.gameState.grid)
@@ -78,7 +77,6 @@ package org.sbrubbles.context.game
 		
 		public override function terminate():void
 		{
-			trace("ActiveGame.terminate: hero @ " + owner.gameState.hero.position)
 			removeEventListener(MouseEvent.CLICK, mouseClicked)
 			
 			super.terminate()
