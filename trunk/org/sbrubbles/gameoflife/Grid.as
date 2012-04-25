@@ -100,7 +100,7 @@ package org.sbrubbles.gameoflife {
 		 * @param y the y coordinate.
 		 * @return the block at the given coordinates or null if there is none.
 		 */
-		public function getBlockAt(x:Number, y:Number):Block
+		public function getAt(x:Number, y:Number):Block
 		{
 			if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 				return null
@@ -119,7 +119,7 @@ package org.sbrubbles.gameoflife {
 			for (var i:int = 0; i < positions.length; i++) {
 				var p:Point = positions[i]
 				
-				result.push(getBlockAt(p.x, p.y))
+				result.push(getAt(p.x, p.y))
 			}
 			
 			return result
@@ -132,10 +132,10 @@ package org.sbrubbles.gameoflife {
 		 * @param state the new state.
 		 * @param positions a series of Points holding the positions of the blocks.
 		 */
-		public function setBlocksAs(state:Number, ...positions):void
+		public function setBlocksTo(state:Number, ...positions):void
 		{
 			for (var i:uint = 0; i < positions.length; i++) {
-				var block = getBlockAt(positions[i].x, positions[i].y)
+				var block = getAt(positions[i].x, positions[i].y)
 				if (block != null && (block.state == Block.LIVE || block.state == Block.DEAD))
 					block.state = state
 			}

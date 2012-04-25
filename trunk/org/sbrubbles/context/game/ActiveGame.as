@@ -29,7 +29,6 @@ package org.sbrubbles.context.game
 			super.start() // can't forget this call!
 			
 			addChild(owner.gameState.grid)
-			addEventListener(MouseEvent.CLICK, mouseClicked, false, 0, true)
 		}
 		
 		public override function update():void
@@ -77,8 +76,6 @@ package org.sbrubbles.context.game
 		
 		public override function terminate():void
 		{
-			removeEventListener(MouseEvent.CLICK, mouseClicked)
-			
 			super.terminate()
 		}
 		
@@ -103,41 +100,6 @@ package org.sbrubbles.context.game
 				owner.gameState.reset()
 				Contexts.goTo(Main.MAIN_MENU)
 			}
-		}
-		
-		// === mouse clicked ===
-		private function mouseClicked(e:MouseEvent):void
-		{
-			var grid:Grid = owner.gameState.grid
-			var x: Number = Math.floor(this.mouseX / grid.gridScale)
-			var y: Number = Math.floor(this.mouseY / grid.gridScale)
-			
-			addAcornAt(grid, x, y)
-		}
-		
-		/**
-		 * Adds an acorn to the grid at the given coordinates.
-		 * An acorn is the pattern below, with . representing an empty cell and x a live one:
-		 * .x.....
-		 * ...x...
-		 * xx..xxx
-		 * 
-		 * The given coordinates indicate the top left block.
-		 * 
-		 * @param grid the grid.
-		 * @param x the x coordinate.
-		 * @param y the y coordinate.
-		 */
-		private function addAcornAt(grid:Grid, x:Number, y:Number):void
-		{
-			grid.setBlocksAs(Block.LIVE,
-				new Point(x, y + 2),
-				new Point(x + 1, y),
-				new Point(x + 1, y + 2),
-				new Point(x + 3, y + 1),
-				new Point(x + 4, y + 2),
-				new Point(x + 5, y + 2),
-				new Point(x + 6, y + 2))
 		}
 	}
 }

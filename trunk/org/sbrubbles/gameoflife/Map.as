@@ -52,7 +52,7 @@ package org.sbrubbles.gameoflife
 			// apply the positions on the grid
 			for (var x:int = 0; x < width; x++) {
 				for (var y:int = 0; y < height; y++) {
-					grid.setBlocksAs(at(x, y), new Point(x, y))
+					grid.setBlocksTo(getAt(x, y), new Point(x, y))
 				}
 			}
 		}
@@ -60,7 +60,7 @@ package org.sbrubbles.gameoflife
 		/**
 		 * @return the state of the given position.
 		 */
-		public function at(x:Number, y:Number):Number
+		public function getAt(x:Number, y:Number):Number
 		{
 			return states[y * width + x]
 		}

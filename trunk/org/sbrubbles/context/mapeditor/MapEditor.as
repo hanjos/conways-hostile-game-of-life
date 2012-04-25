@@ -121,7 +121,7 @@ package org.sbrubbles.context.mapeditor
 				var y: Number = Math.floor(this.mouseY / _grid.gridScale)
 				
 				if (_selectedPattern.pattern == null) { // toggle the state of the underlying block
-					_grid.getBlockAt(x, y).toggleState()
+					_grid.getAt(x, y).toggleState()
 				} else { // apply the selected pattern
 					var state = _selectedPattern.pattern == Pattern.SINGLE ? Block.END : Block.LIVE
 					_selectedPattern.pattern.applyOn(state, _grid, x, y)

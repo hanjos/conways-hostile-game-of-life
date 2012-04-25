@@ -77,10 +77,6 @@ package org.sbrubbles.context.mainmenu
 			if (Input.isPressed(Keyboard.C)) { // clear the background
 				_grid.clearMap()
 			}
-			
-			if (Input.isPressed(Keyboard.E)) { // go to the map editor
-				Contexts.goTo(Main.MAP_EDITOR)
-			}
 		}
 		
 		private function mouseClicked(e:MouseEvent):void 
