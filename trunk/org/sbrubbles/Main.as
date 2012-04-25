@@ -95,8 +95,9 @@ package org.sbrubbles
 		{
 			var map:Map = new Map(100, 100)
 			
-			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(13, 20))
-			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(3, 50))
+			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(17, 68))
+			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(23, 20))
+			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(20, 44))
 			
 			// spaceship travelling down
 			var spaceshipGoingDown:Pattern = new Pattern([ 
