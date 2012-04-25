@@ -266,7 +266,7 @@ package org.sbrubbles.gameoflife
 			
 			args.unshift(state) // putting the state first
 			
-			grid.setBlocksAs.apply(grid, args) // needed because of the varargs
+			grid.setBlocksTo.apply(grid, args) // needed because of the varargs
 			
 			return result
 		}
