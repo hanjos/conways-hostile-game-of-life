@@ -121,6 +121,97 @@ package org.sbrubbles.gameoflife
 				new Point(1, 2),
 				new Point(2, 2),
 			])
+			
+		/**
+		 * The pattern below, with . representing an empty cell and x a live 
+		 * one:
+		 * ...x.
+		 * ....x
+		 * x...x
+		 * .xxxx
+		 */
+		public static const SPACESHIP:Pattern = new Pattern([ 
+				new Point(0, 2), 
+				new Point(1, 3), 
+				new Point(2, 3), 
+				new Point(3, 3),
+				new Point(4, 3),
+				new Point(4, 2),
+				new Point(4, 1),
+				new Point(3, 0),
+			])
+			
+		/**
+		 * The pattern below, with . representing an empty cell and x a live 
+		 * one:
+		 * ..xxx...xxx..
+		 * .............
+		 * x....x.x....x
+		 * x....x.x....x
+		 * x....x.x....x
+		 * ..xxx...xxx..
+		 * .............
+		 * ..xxx...xxx..
+		 * x....x.x....x
+		 * x....x.x....x
+		 * x....x.x....x
+		 * .............
+		 * ..xxx...xxx..
+		 */
+		public static const PULSAR:Pattern = new Pattern([
+			// top-left
+			new Point(0, 2),
+			new Point(0, 3),
+			new Point(0, 4),
+			new Point(2, 0),
+			new Point(2, 5),
+			new Point(3, 0),
+			new Point(3, 5),
+			new Point(4, 0),
+			new Point(4, 5),
+			new Point(5, 2),
+			new Point(5, 3),
+			new Point(5, 4),
+			// top-right
+			new Point(0, 8),
+			new Point(0, 9),
+			new Point(0, 10),
+			new Point(2, 7),
+			new Point(2, 12),
+			new Point(3, 7),
+			new Point(3, 12),
+			new Point(4, 7),
+			new Point(4, 12),
+			new Point(5, 8),
+			new Point(5, 9),
+			new Point(5, 10),
+			// bottom-left
+			new Point(7, 2),
+			new Point(7, 3),
+			new Point(7, 4),
+			new Point(8, 0),
+			new Point(8, 5),
+			new Point(9, 0),
+			new Point(9, 5),
+			new Point(10, 0),
+			new Point(10, 5),
+			new Point(12, 2),
+			new Point(12, 3),
+			new Point(12, 4),
+			// bottom-right
+			new Point(7, 8),
+			new Point(7, 9),
+			new Point(7, 10),
+			new Point(8, 7),
+			new Point(8, 12),
+			new Point(9, 7),
+			new Point(9, 12),
+			new Point(10, 7),
+			new Point(10, 12),
+			new Point(12, 8),
+			new Point(12, 9),
+			new Point(12, 10),
+		])
 		
 		/**
 		 * Returns a filled rectangle pattern, with the given dimensions.
