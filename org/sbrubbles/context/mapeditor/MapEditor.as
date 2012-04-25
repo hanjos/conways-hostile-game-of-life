@@ -1,5 +1,6 @@
 package org.sbrubbles.context.mapeditor 
 {
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.text.TextField;
@@ -82,6 +83,7 @@ package org.sbrubbles.context.mapeditor
 			
 			addEventListener(MouseEvent.CLICK, mouseClicked, false, 0, true)
 			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved, false, 0, true)
+			owner.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressed, false, 0, true)
 		}
 		
 		public override function update():void
@@ -93,26 +95,15 @@ package org.sbrubbles.context.mapeditor
 			}
 			
 			_selectedPattern.update() // always update the shadow
-			
-			checkInput()
 		}
 		
 		public override function terminate():void
 		{
 			removeEventListener(MouseEvent.CLICK, mouseClicked)
 			removeEventListener(MouseEvent.MOUSE_MOVE, mouseMoved)
+			owner.stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyPressed)
 			
 			super.terminate()
-		}
-		
-		private function checkInput()
-		{
-			// evaluate any commands
-			for (var key in _input) { 
-				if (Input.isPressed(key)) {
-					_input[key].call()
-				}
-			}
 		}
 		
 		private function mouseClicked(e:MouseEvent):void 
@@ -127,6 +118,15 @@ package org.sbrubbles.context.mapeditor
 					var state = _selectedPattern.pattern == Pattern.SINGLE ? Block.END : Block.LIVE
 					_selectedPattern.pattern.applyOn(state, _grid, x, y)
 				}
+			}
+		}
+		
+		private function keyPressed(e:KeyboardEvent):void
+		{
+			trace(Keyboard.H, e.keyCode)
+			
+			if (e.keyCode in _input) {
+				_input[e.keyCode].call()
 			}
 		}
 		
