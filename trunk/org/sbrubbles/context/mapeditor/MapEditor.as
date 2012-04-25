@@ -54,6 +54,7 @@ package org.sbrubbles.context.mapeditor
 			_input[Keyboard.U] = new Command("Unselect", function () { _selectedPattern.pattern = null } )
 			_input[Keyboard.C] = new Command("Clear map", function () { _grid.clearMap(); _running = false } )
 			_input[Keyboard.SPACE] = new Command("Pause", function () { _running = !_running } )
+			_input[Keyboard.RIGHT] = new Command("Next generation", function () { _running = false; _grid.update() } )
 			_input[Keyboard.Q] = new Command("Quit", function () { Contexts.goTo(Main.MAIN_MENU) } )
 			_input[Keyboard.H] = new Command("Help", 
 				function () { 
@@ -185,8 +186,18 @@ package org.sbrubbles.context.mapeditor
 			t.defaultTextFormat = format
 			var text:String = "<html><p align='center'>Inputs</p><br/><p>"
 			
+			var fromKeyCode:Function = function (key:uint):String {
+				if (key == Keyboard.SPACE) {
+					return "SPACE"
+				} else if (key == Keyboard.RIGHT) {
+					return "RIGHT"
+				} else { 
+					return String.fromCharCode(key)
+				}
+			}
+			
 			for(var key in _input) {
-				text += "<b>" + (key == Keyboard.SPACE ? "SPACE" : String.fromCharCode(key)) + "</b>:" + _input[key].name + "<br/>"
+				text += "<b>" + fromKeyCode(key) + "</b>:" + _input[key].name + "<br/>"
 			}
 			
 			text += "</p><br/><p align='center'>Press H to go back</p>"
