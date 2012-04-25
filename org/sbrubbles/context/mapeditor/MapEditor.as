@@ -44,14 +44,13 @@ package org.sbrubbles.context.mapeditor
 		{
 			super.start()
 			
-			addEventListener(MouseEvent.CLICK, mouseClicked, false, 0, true)
-			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved, false, 0, true)
-			
 			_input[Keyboard.G] = new Command("Glider", function () { _selectedPattern.pattern = Pattern.GLIDER } )
 			_input[Keyboard.A] = new Command("Acorn", function () { _selectedPattern.pattern = Pattern.ACORN } )
 			_input[Keyboard.O] = new Command("Gosper's glider gun", function () { _selectedPattern.pattern = Pattern.GOSPER_GLIDER_GUN } )
 			_input[Keyboard.E] = new Command("End", function () { _selectedPattern.pattern = Pattern.SINGLE } )
 			_input[Keyboard.B] = new Command("Beehive", function () { _selectedPattern.pattern = Pattern.BEEHIVE } )
+			_input[Keyboard.S] = new Command("Spaceship", function () { _selectedPattern.pattern = Pattern.SPACESHIP } )
+			_input[Keyboard.P] = new Command("Pulsar", function () { _selectedPattern.pattern = Pattern.PULSAR } )
 			_input[Keyboard.U] = new Command("Unselect", function () { _selectedPattern.pattern = null } )
 			_input[Keyboard.C] = new Command("Clear map", function () { _grid.clearMap(); _running = false } )
 			_input[Keyboard.SPACE] = new Command("Pause", function () { _running = !_running } )
@@ -79,6 +78,9 @@ package org.sbrubbles.context.mapeditor
 			addChild(_grid)
 			addChild(_tooltip)
 			addChild(_help)
+			
+			addEventListener(MouseEvent.CLICK, mouseClicked, false, 0, true)
+			addEventListener(MouseEvent.MOUSE_MOVE, mouseMoved, false, 0, true)
 		}
 		
 		public override function update():void
@@ -134,8 +136,8 @@ package org.sbrubbles.context.mapeditor
 				var y:Number = Math.floor(this.mouseY / _grid.gridScale)
 				
 				_selectedPattern.position = new Point(x, y);
-				_tooltip.x = Math.min(this.mouseX, _grid.width - _tooltip.width)
-				_tooltip.y = Math.max(this.mouseY + 2, _tooltip.height) - _tooltip.height - 2
+				_tooltip.x = Math.max(this.mouseX - _tooltip.width, 0)
+				_tooltip.y = Math.max(this.mouseY - _tooltip.height, 0)
 				_tooltip.text = x + "," + y
 			}
 		}
@@ -144,6 +146,7 @@ package org.sbrubbles.context.mapeditor
 		{
 			var t:TextField = new TextField();
 			t.background = true
+			t.backgroundColor = 0xFFFFE0
 			t.border = false
 			t.type = TextFieldType.DYNAMIC // non-editable
 			t.selectable = false

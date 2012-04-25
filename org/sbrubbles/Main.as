@@ -95,6 +95,9 @@ package org.sbrubbles
 		{
 			var map:Map = new Map(100, 100)
 			
+			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(13, 20))
+			map.setAt(Block.LIVE, Pattern.PULSAR.startingFrom(3, 37))
+			
 			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(17, 82))
 			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(23, 57))
 			map.setAt(Block.LIVE, Pattern.GOSPER_GLIDER_GUN.startingFrom(31, 33))
