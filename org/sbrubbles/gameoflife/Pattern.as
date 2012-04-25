@@ -103,8 +103,25 @@ package org.sbrubbles.gameoflife
 				new Point(35, 3)
 			])
 
+		/** A single cell. */
 		public static const SINGLE:Pattern = new Pattern([ new Point(0, 0) ])
 
+		/**
+		 * The pattern below, with . representing an empty cell and x a live 
+		 * one:
+		 * .xx.
+		 * x..x
+		 * .xx.
+		 */
+		public static const BEEHIVE:Pattern = new Pattern([ 
+				new Point(1, 0), 
+				new Point(2, 0), 
+				new Point(0, 1), 
+				new Point(3, 1),
+				new Point(1, 2),
+				new Point(2, 2),
+			])
+		
 		/**
 		 * Returns a filled rectangle pattern, with the given dimensions.
 		 * 

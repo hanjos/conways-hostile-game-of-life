@@ -25,16 +25,16 @@ package org.sbrubbles.context.mapeditor
 		
 		public function update():void
 		{
-			if (pattern == null) {
-				return // no pattern selected, nothing to do
-			}
-			
 			// draw on the canvas, not the underlying map
 			var canvas:BitmapData = _grid.canvas 
 
 			// the grid only clears the canvas on update, can't rely on it being 
 			// called
 			_grid.clearCanvas()
+			
+			if (pattern == null) {
+				return // no pattern selected, nothing to do
+			}
 			
 			// get the positions to shadow
 			var positions:Array = pattern.startingFrom(position.x, position.y)
